@@ -1,5 +1,8 @@
 from flask import Flask
 
+from . import auth
+from . import listing
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -20,9 +23,7 @@ def create_app(test_config=None):
         # load the test config if passed in
         app.config.from_mapping(test_config)
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(listing.bp)
 
     return app
