@@ -1,5 +1,5 @@
 # Introduction
-This is a group project for CITS5505. The software aims to provides a trading platform and community for UWA students.
+This is a group project for CITS5505. The software aims to provide a trading platform and community for UWA students.
 
 # Development setup
 1. Make sure you have python 3.10.2 installed  
@@ -16,4 +16,4 @@ This is a group project for CITS5505. The software aims to provides a trading pl
    `pip install -r requirements.txt`  
 
 5. Run development  
-   `python uwamkp\server.py`  
+   `flask --app uwamkp run --debug`   

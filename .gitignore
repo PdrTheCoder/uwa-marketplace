@@ -140,3 +140,12 @@ cython_debug/
 
 .history
 .vscode-upload.json
+
+# ignore config file
+config.py
+
+# ignore local dev db file
+*.db
+
+# ignore instance
+instance
