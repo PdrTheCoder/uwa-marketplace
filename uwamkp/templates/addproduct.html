@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Add your product{% endblock %}
+{% block content %}
+
+<div>
+    <div class="image">
+        <img src="..." class="img-fluid" alt = "Product image" width="600px" height="300px">
+    </div>
+    <div class="Product">
+        <h3>* Title: <input type="text" placeholder="add your product title"></h3>
+        <p>* Price: $ <input type="text" placeholder="add price"></p>
+        <p>* Condition: 
+        <select>
+            <option value="New">New</option>
+            <option value="Used1">Used-like new</option>
+            <option value="Used2">Used-good</option>
+            <option value="Used3">Used-fair</option>
+        </select>
+        </p>
+        <p>* Description: 
+            <input type="text" placeholder="we suggest you to provide information including color, brand, size, type, any imperfections and so on..." style="width: 300px;height: 100px;">
+        </p>
+        <button type="button" class="btn">Cancel</button>
+        <button type="button" class="btn">Publish</button>
+    </div>
+
+    <div class="Seller col-2-5">
+        <img src="..." alt = "S" style="width: 50px; height: 50px; border-radius: 50%;">
+        <p>Seller: {{ user }}</p>
+    </div>
+
+    <div>
+        <input placeholder="Leave your message to seller so that he/she could contact you">
+        <button type="button" class="btn">Post</button>
+    </div>
+    
+</div>
+
+
+{% endblock %}
