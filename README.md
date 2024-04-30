@@ -16,4 +16,4 @@ This is a group project for CITS5505. The software aims to provide a trading pla
    `pip install -r requirements.txt`  
 
 5. Run development  
-   `python uwamkp\server.py`  
+   `flask --app uwamkp run --debug`   
