@@ -12,6 +12,8 @@ This is a group project for CITS5505. The software aims to provide a trading pla
 3. Activate virtualenv (Windows)  
    `venv\Scripts\activate`  
 
+   on Mac maybe use `source venv\bin\activate`
+
 4. Install python package  
    `pip install -r requirements.txt`  
 
