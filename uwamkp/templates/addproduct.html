@@ -2,38 +2,64 @@
 {% block title %}Add your product{% endblock %}
 {% block content %}
 
-<div>
-    <div class="image">
-        <img src="..." class="img-fluid" alt = "Product image" width="600px" height="300px">
-    </div>
-    <div class="Product">
-        <h3>* Title: <input type="text" placeholder="add your product title"></h3>
-        <p>* Price: $ <input type="text" placeholder="add price"></p>
-        <p>* Condition: 
-        <select>
-            <option value="New">New</option>
-            <option value="Used1">Used-like new</option>
-            <option value="Used2">Used-good</option>
-            <option value="Used3">Used-fair</option>
-        </select>
-        </p>
-        <p>* Description: 
-            <input type="text" placeholder="we suggest you to provide information including color, brand, size, type, any imperfections and so on..." style="width: 300px;height: 100px;">
-        </p>
-        <button type="button" class="btn">Cancel</button>
-        <button type="button" class="btn">Publish</button>
-    </div>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <div class="Seller col-2-5">
-        <img src="..." alt = "S" style="width: 50px; height: 50px; border-radius: 50%;">
-        <p>Seller: {{ user }}</p>
-    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="image-upload">
+                <label for="file-input">
+                    <img src="{{ url_for('static', filename='addpic.png') }}" alt="Add photo" class="img-fluid add-photo-btn" width="480px" height="310px">
+                </label>
+                <input id="file-input" type="file" style="display:none;"/>
+                <div id="preview" class="preview"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form>
+                <div class="form-group">
+                    <label for="productTitle">Title:</label>
+                    <input type="text" class="form-control" id="productTitle" placeholder="Add your product title briefly">
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Price:</label>
+                    $ <input type="number" class="form-control" id="productPrice" placeholder="Add price">
+                </div>
 
-    <div>
-        <input placeholder="Leave your message to seller so that he/she could contact you">
-        <button type="button" class="btn">Post</button>
+                <div class="form-group">
+                    <label for="productCondition">Condition:</label>
+                    <select class="form-control" id="productCondition" aria-placeholder="Choose your condition">
+                        <option value="New">New</option>
+                        <option value="Used1">Used-like new</option>
+                        <option value="Used2">Used-good</option>
+                        <option value="Used3">Used-fair</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="productDescription">Description:</label>
+                    <textarea class="form-control" id="productDescription" placeholder="Provide information including color, brand, size, type, any imperfections and so on..." rows="4"></textarea>
+                </div>
+                <!-- todo: addfunction -->
+                <div class="form-group action-btns">
+                    <!-- todo: clean content function add  -->
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                    <!-- todo: store to database -->
+                    <!-- todo: jump into product details page -->
+                    <button type="button" class="btn btn-primary">Publish</button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col-md-12">
+            <div class="seller-info">
+                <img src="..." alt="Seller" class="seller-img">
+                <!-- read seller userid -->
+                <p>Seller: {{ user }}</p>
+            </div>
+        </div>
     </div>
-    
 </div>
 
 

@@ -38,6 +38,7 @@ class Listing(Base):
     __tablename__ = 'listing'
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     title: Mapped[str] = mapped_column(VARCHAR(60), nullable=False)
+    #
     condition: Mapped[int] = mapped_column(SMALLINT, nullable=False)
     price: Mapped[float] = mapped_column(DECIMAL, nullable=False)
     description: Mapped[str] = mapped_column(TEXT, nullable=False)
@@ -48,9 +49,9 @@ class Listing(Base):
     sold: Mapped[bool] = mapped_column(BOOLEAN, nullable=False)
     deleted: Mapped[bool] = mapped_column(BOOLEAN, nullable=False)
     created_at: Mapped[str] = mapped_column(DATETIME, nullable=False)
-    updated_at: Mapped[str] = mapped_column(DATETIME)
+    updated_at: Mapped[str] = mapped_column(DATETIME, nullable=True)
     category_id: Mapped[int] = mapped_column(
-        ForeignKey('category.id', ondelete='SET NULL'))
+        ForeignKey('category.id', ondelete='SET NULL'), nullable=True)
 
 
 class Reply(Base):
