@@ -11,7 +11,9 @@ def my_listing():
     return render_template("mylisting.html")
 
 # ======= end my listing ===========
-
+@bp.route('/addproduct')
+def add_product():
+     return render_template("addproduct.html")
 
 # ======= other views 1 ===========
 # other

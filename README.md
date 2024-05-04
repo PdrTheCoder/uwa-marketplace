@@ -10,7 +10,9 @@ This is a group project for CITS5505. The software aims to provide a trading pla
    `python -m venv venv`  
 
 3. Activate virtualenv (Windows)  
-   `venv\Scripts\activate`  
+   `venv\Scripts\activate`
+   Activate virtualenv(Mac)  
+   `source venv/bin/activate`
 
    on Mac maybe use `source venv\bin\activate`
 
