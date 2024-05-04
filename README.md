@@ -18,5 +18,10 @@ This is a group project for CITS5505. The software aims to provide a trading pla
 6. Install python package  
    `pip install -r requirements.txt`  
 
-7. Run development  
-   `flask --app uwamkp run --debug`   
+5. Migrate database  
+   `cd uwamkp`  
+   `flask db upgrade`
+
+6. Run development  
+   Under uwamkp folder, run  
+   `flask run --reload`   
