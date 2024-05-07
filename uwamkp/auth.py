@@ -1,5 +1,7 @@
 from flask import Blueprint
-from flask import render_template
+from flask import render_template, request
+from uwamkp.forms import LoginForm
+
 
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
