@@ -1,4 +1,39 @@
 {% extends "base.html" %}
+
+{% block extra_head %}
+<style>
+    .login-container {
+        margin-top: 50px;
+    }
+    .login-form {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-control {
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-Do login page here.
+<div class="container login-container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="login-form">
+                <h2 class="text-center">Welcome to UWA Marketplace!</h2>
+                <form action="/login" method="post">
+                    <label for="email">Mail Address</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+
+                    <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -3,6 +3,7 @@ from uwamkp.models import db
 from flask_migrate import Migrate
 from uwamkp.auth import bp as auth_bp
 from uwamkp.mylisting import bp as mylisting_bp
+from uwamkp.signup import bp as signup_bp
 
 
 # create the app and db
@@ -15,3 +16,5 @@ migrate = Migrate(app, db)
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(mylisting_bp)
+app.register_blueprint(signup_bp)
+
