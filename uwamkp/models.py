@@ -13,6 +13,12 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+
+
+def format_iso_datetime(some_datetime):
+    """Format the datetime to isoformat"""
+    return some_datetime.isoformat(sep=" ", timespec="seconds")
 
 
 class Base(DeclarativeBase):
@@ -38,7 +44,11 @@ class Listing(Base):
     __tablename__ = 'listing'
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     title: Mapped[str] = mapped_column(VARCHAR(60), nullable=False)
-    #
+    # For condition
+    # 0: New
+    # 1: Used - Like New
+    # 2: Used - Good
+    # 3: Used - Fair
     condition: Mapped[int] = mapped_column(SMALLINT, nullable=False)
     price: Mapped[float] = mapped_column(DECIMAL, nullable=False)
     description: Mapped[str] = mapped_column(TEXT, nullable=False)
@@ -52,6 +62,31 @@ class Listing(Base):
     updated_at: Mapped[str] = mapped_column(DATETIME, nullable=True)
     category_id: Mapped[int] = mapped_column(
         ForeignKey('category.id', ondelete='SET NULL'), nullable=True)
+    seller = relationship("User")
+
+    def to_dict(self):
+        condition_mapping = {
+            0: "New",
+            1: "Used - Like New",
+            2: "Used - Good",
+            3: "Used - Fair"
+        }
+        return {
+            "id": self.id,
+            "title": self.title,
+            "condition": condition_mapping[self.condition],
+            "price": round(self.price, 2),
+            "description": self.description,
+            "seller_id": self.seller_id,
+            "seller_name": self.seller.username,
+            "suspended": self.suspended,
+            "sold": self.sold,
+            "deleted": self.deleted,
+            "created_at": format_iso_datetime(
+                self.created_at),
+            "updated_at": format_iso_datetime(
+                self.updated_at) if self.updated_at else None
+        }
 
 
 class Reply(Base):

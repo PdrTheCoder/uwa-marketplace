@@ -16,3 +16,8 @@ def get_salt_and_password(password: str, salt=None) -> tuple:
 
 def check_password(password, saved, salt):
     return hashlib.md5((password + salt).encode('utf-8')).hexdigest() == saved
+
+
+def format_iso_datetime(some_datetime):
+    """Format the datetime to isoformat"""
+    return some_datetime.isoformat(sep=" ", timespec="seconds")

@@ -6,7 +6,12 @@ from sqlalchemy.orm import Session
 from models import User, Listing
 from utils import get_salt_and_password
 
-engine = create_engine("sqlite:///../instance/uwamkp.db", echo=True)
+# here change the sql url base on your actual env
+# https://docs.sqlalchemy.org/en/20/core/engines.html
+engine = create_engine(
+    r"sqlite:///D:\immi\uwa\5505\project2\uwa-marketplace\instance\uwamkp.db",
+    echo=True
+)
 
 
 def add_user(
@@ -63,7 +68,7 @@ def add_listing(
 if __name__ == "__main__":
     # add a use to start
     # ==================
-    # add_user("00000000@student.uwa.edu.au", "test", "test", True)
+    # add_user("00000001@student.uwa.edu.au", "test1", "test1", True)
     # ==================
 
     # add a listing to start

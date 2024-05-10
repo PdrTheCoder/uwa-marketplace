@@ -24,6 +24,14 @@ This is a group project for CITS5505. The software aims to provide a trading pla
    `cd uwamkp`  
    `flask db upgrade`
 
-7. Run development  
+7. Set secret key in environment  
+   In windows powershell: `$env:SECRET_KEY='astrongsecretdsfs'`  
+   In mac: `export SECRET_KEY=<astrongsecretkey>`
+
+8. Run development  
    Under uwamkp folder, run  
-   `flask run --reload`   
+   `flask run --debug`   
+
+
+# Add some data for dev
+Can use insert_dev_data.py to insert some sample data.

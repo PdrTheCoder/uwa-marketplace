@@ -1,4 +1,5 @@
 from flask import Flask
+import os
 from uwamkp.models import db
 from flask_migrate import Migrate
 from uwamkp.auth import bp as auth_bp
@@ -7,6 +8,7 @@ from uwamkp.mylisting import bp as mylisting_bp
 
 # create the app and db
 app = Flask(__name__)
+app.secret_key = os.environ['SECRET_KEY']
 
 # configure the SQLite database, relative to the app instance folder
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///uwamkp.db"
