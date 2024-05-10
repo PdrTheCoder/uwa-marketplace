@@ -1,0 +1,30 @@
+.circle {
+  display: inline-block;
+    background-color: #00d53b;
+    margin: 10px;
+    border-radius: 50%;
+}
+
+.circle-inner {
+  color: white;
+  display: table-cell;
+  vertical-align: middle; 
+  text-align: center;
+  text-decoration: none;
+  height: 150px;
+  width: 150px;  
+  font-size: 40px;
+}
+
+.myrow {
+    margin-top: 20px;
+}
+
+.centered {
+    text-align: center;
+}
+
+.list-desc {
+  height: 90px;
+  overflow: hidden;
+}

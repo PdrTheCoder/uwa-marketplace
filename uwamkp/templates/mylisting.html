@@ -1,7 +1,75 @@
 {% extends "base.html" %}
+
+{% block extra_head %}
+<link href={{ url_for('static', filename='/css/mylisting.css' ) }} rel="stylesheet">
+<script src={{ url_for('static', filename='/js/mylisting.js') }}></script>
+{% endblock %}
+
 {% block content %}
 <div class="subpage row">
-    <div class="profile col-3">This is the profile area.</div>
-    <div class="listing-list col-9">This is the my listing area.</div>
+    <section class="profile col-3">
+        <section id="basic">
+            <div class="centered">
+                <div class="circle">
+                    <p class="circle-inner">AY</p>
+                </div>
+            </div>
+
+            <div class="centered">
+                <h4>Pedro Wang</h4>
+                <h5>Python Programmer</h5>
+            </div>
+        </section>
+    </section>
+    <div class="listing-list col-9 row">
+        {% for listing in listings %}
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ listing.title }}</h5>
+                    <div class="card-text list-desc">{{ listing.description }}</div>
+                    <span>{{ listing.price }} AUD</span>
+                    {% if listing.condition == "New" %}
+                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
+                    {% endif %}
+                    {% if listing.condition == "Used - Like New" %}
+                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
+                    {% endif %}
+                    {% if listing.condition == "Used - Good" %}
+                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
+                    {% endif %}
+                    {% if listing.condition == "Used - Fair" %}
+                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a type="button" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <button type="button" class="btn btn-sm btn-outline-danger c-delete-listing" id="delete-{{listing.id}}">Delete</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
+
+<!-- Modal Part Maybe to do it later -->
+
+<!-- <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Delete Listing</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete the listing?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input id="toDeleteListingId" value="" hidden />
+                <button type="button" class="btn btn-danger">I'm Sure, Please.</button>
+            </div>
+        </div>
+    </div>
+</div> -->
 {% endblock %}
