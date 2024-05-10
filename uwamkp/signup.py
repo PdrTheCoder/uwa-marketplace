@@ -1,85 +1,48 @@
 # signup.py
 from flask import render_template, Blueprint, request, redirect, url_for, flash
+from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash
 import re  # Regular expression module for validating email
 from flask_wtf import CSRFProtect
-from uwamkp.models import User, db
-bp = Blueprint('signup', __name__, url_prefix='/user')
+from uwamkp.models import User,db
+from .forms import LoginForm, RegistrationForm
+bp = Blueprint('signup', __name__, url_prefix='/signup')
 
 
-# ======= signup ===========
-@bp.route('/signup', methods=['GET','POST'])
-def signup():
-    print("Signup route accessed, method:", request.method) 
-    print(url_for('signup.signup'))
-    print("Data received:", request.form)
-    if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-        password2 = request.form['password2']
+# ======= signup_login_logout ===========
+@bp.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data.lower(),
+                    username=form.username.data,
+                    password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+    return render_template('signup.html', form=form)
 
-        print("Email validation check...")
-        if not re.match(r'^[a-zA-Z0-9._%+-]+\.uwa\.edu\.au$', email):
-            #error = "Please enter a valid UWA email address."
-            flash("Please enter a valid UWA email address.", 'error')
-            #return render_template('signup.html', error=error)
-            #return redirect(url_for('signup.signup'))
-            return render_template('signup.html', form_data=form_data)
+@bp.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data.lower()).first()
+        if user is not None and user.verify_password(form.password.data):
+            login_user(user, form.remember_me.data)
+            next = request.args.get('next')
+            if next is None or not next.startswith('/'):
+                next = url_for('main.index')
+            return redirect(next)
+        flash('Invalid email or password.')
+    return render_template('login.html', form=form)
 
-        print("User existence check...")
-        user = User.query.filter_by(email=email).first()
-        if user:
-            #error = "An account with this email already exists."
-            flash("An account with this email already exists.", 'error')
-            #return render_template('signup.html', error=error)
-            #return redirect(url_for('signup.signup'))
-            return render_template('signup.html', form_data=form_data)
 
-        print("Password match check...")
-        if password != password2:
-            #error = "Passwords do not match."
-            flash("Passwords do not match.", 'error')
-            #return render_template('signup.html', error=error)
-            return redirect(url_for('signup.signup'))
-
-        print("Password strength check...")
-        if not validate_password(password):
-            #error = "Password must contain at least one numeral and one uppercase and lowercase letter, and at least 8 characters."
-            flash("Password must contain at least one numeral, one uppercase and lowercase letter, and at least 8 characters.", 'error')
-            #return render_template('signup.html', error=error)
-            #return redirect(url_for('signup.signup'))
-            return render_template('signup.html', form_data=form_data)
-
-        hashed_password = generate_password_hash(password)
-        new_user = User(username=username, password=hashed_password)
-        db.session.add(new_user)
-        try:
-            db.session.commit()
-        except Exception as e:
-            db.session.rollback()
-            print(f"Database error: {str(e)}")
-            flash("Failed to register. Please try again.", 'error')
-            return render_template('signup.html')
-
-        flash("You have successfully signed up! Please log in.", 'success')
-        return redirect(url_for('auth.login'))
-
-    return render_template('signup.html')
-
-def validate_password(password):
-    """ Check if the password is strong enough."""
-    if len(password) < 8:
-        return False
-    if not any(c.isdigit() for c in password):
-        return False
-    if not any(c.isupper() for c in password):
-        return False
-    if not any(c.islower() for c in password):
-        return False
-    return True
-
-# ======= signup ===========
+@bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('You have been logged out.')
+    return redirect(url_for('main.index'))
+# ======= signup_login_logout ===========
 
 
 # ======= other views 1 ===========
