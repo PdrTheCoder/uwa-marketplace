@@ -11,6 +11,21 @@ import re  # Regular expression module for validating email and username
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+@bp.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data.lower(),
+                    username=form.username.data,
+                    password=form.password.data,
+                    created_at=datetime.now(timezone.utc), # timezone-aware UTC datetime
+                    is_admin=False,
+                    deleted=False)
+        db.session.add(user)
+        db.session.commit()
+    return render_template('signup.html', form=form)
+
+
 
 @bp.route('/login', methods=["GET", "POST"])
 def login():
@@ -36,19 +51,6 @@ def logout():
     flash('You have been logged out.')
     return redirect(url_for('main.index'))
 
-@bp.route('/register', methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(email=form.email.data.lower(),
-                    username=form.username.data,
-                    password=form.password.data,
-                    created_at=datetime.now(timezone.utc), # timezone-aware UTC datetime
-                    is_admin=False,
-                    deleted=False)
-        db.session.add(user)
-        db.session.commit()
-    return render_template('signup.html', form=form)
 
 
 
