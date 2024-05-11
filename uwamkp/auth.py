@@ -22,7 +22,13 @@ def register():
                     is_admin=False,
                     deleted=False)
         db.session.add(user)
-        db.session.commit()
+        try:
+            db.session.commit()
+            flash('You have been successfully registered. Please log in.', 'success')
+            return redirect(url_for('auth.login'))
+        except Exception as e:
+            db.session.rollback()
+            flash('Registration failed. Please try again. Error: {}'.format(e), 'error')
     return render_template('signup.html', form=form)
 
 
