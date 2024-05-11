@@ -2,24 +2,25 @@
 {% block title %}Product details{% endblock %}
 {% block content %}
 
+
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style-products.css') }}">
 
 <div class="container">
     <div class="row">
         <div class="col-md-6">
             <!-- image -->
-            <img src="{{ url_for('static', filename='path/to/your/product/image.jpg') }}" alt="Product Image" class="img-fluid">
+            <img src="{{ url_for('static', filename='#..') }}" alt="Product Image" class="img-fluid">
         </div>
         <div class="col-md-6">
             <!-- goods details -->
             <h1 class="title">Title</h1>
-            <label>[] product.title []</label>
+            <p>{{ product.title }}</p>
             <h2 class="basicinfo">Price:</h2>
-            <p>$[] product.price []</p>
+            <p>${{ product.price }}</p>
             <h2 class="basicinfo">Condition:</h2>
-            <p>[] product.condition []</p>
+            <p>{{ ['New', 'Used - Like New', 'Used - Good', 'Used - Fair'][product.condition] }}</p>
             <h2 class="basicinfo">Description:</h2>
-            <p>[] product.description []</p>
+            <p>{{ product.description }}</p>
         </div>
     </div>
 
@@ -27,9 +28,10 @@
         <div class="col-md-4">
             <!-- Seller information -->
             <h4>Seller Information</h4>
-            <p><strong>Username:</strong> [] seller.username []</p>
-            <p><strong>User ID:</strong> [] Listing.seller_id []</p>
-            <img src="[] url_for('static', filename='path/to/seller/photo.jpg') []" alt="Seller Photo" class="seller-img">
+            <p><strong>Username:</strong> {{ seller.username }}</p>
+            <p><strong>User ID:</strong> {{ Listing.seller_id }}</p>
+            <!-- seller avatar haven't added -->
+            <!-- <img src="{{ url_for('static', filename='#sellerimage') }}" alt="Seller Photo" class="seller-img"> -->
         </div>
         <div class="col-md-8">
             <!-- message board to seller -->
@@ -50,12 +52,12 @@
 </div>
 
 <script>
-function sendMessage() {
+function postMessage() 
     var message = document.getElementById('messageInput').value;
     var messageBoard = document.querySelector('.message-board');
 
     if (message.trim() === '') {
-        alert('Please enter a message.'); 
+        alert('Please enter your message.'); 
         return;
     }
 
@@ -65,17 +67,16 @@ function sendMessage() {
                         now.getDate().toString().padStart(2, '0') + ' ' + 
                         now.getHours().toString().padStart(2, '0') + ':' + 
                         now.getMinutes().toString().padStart(2, '0');
-
-    var newMessage = `<div class="card mt-2">
+                        
+    var newMessage = <div class="card mt-2">
                           <div class="card-body">
                               <p>${message}</p>
                               <small>Posted by You on ${formattedDate}</small>
                           </div>
-                      </div>`;
+                      </div>;
 
     messageBoard.innerHTML += newMessage;
     document.getElementById('messageInput').value = ''; 
-}
 </script>
 
 {% endblock %}
