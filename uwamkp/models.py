@@ -9,10 +9,12 @@ from sqlalchemy.dialects.sqlite import (
     VARCHAR,
 )
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy import ForeignKey
+from werkzeug.security import check_password_hash
 
 
 class Base(DeclarativeBase):
@@ -22,16 +24,18 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     email: Mapped[str] = mapped_column(unique=True, nullable=False)
     username: Mapped[str] = mapped_column(unique=True, nullable=False)
-    salt: Mapped[str] = mapped_column(nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     created_at: Mapped[str] = mapped_column(DATETIME, nullable=False)
     is_admin: Mapped[bool] = mapped_column(BOOLEAN, nullable=False)
     deleted: Mapped[bool] = mapped_column(BOOLEAN, nullable=False)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password, password)
 
 
 class Listing(Base):

@@ -1,17 +1,19 @@
-#forms.py
+# forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 from wtforms import ValidationError
 from uwamkp.models import User
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Length(1, 64),
-                                             Email()])
+    """
+    Here we only validate they are empty. Because most of the validations
+    are done during registration.
+    """
+    email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Keep me logged in')
-    submit = SubmitField('Log In')
+    # TODO remember_me = BooleanField('Keep me logged in')
 
 
 class RegistrationForm(FlaskForm):
@@ -34,4 +36,3 @@ class RegistrationForm(FlaskForm):
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('Username already in use.')
-

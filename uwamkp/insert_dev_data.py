@@ -2,9 +2,9 @@ from datetime import datetime
 from datetime import timezone
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
+from werkzeug.security import generate_password_hash
 
 from models import User, Listing
-from utils import get_salt_and_password
 
 engine = create_engine("sqlite:///../instance/uwamkp.db", echo=True)
 
@@ -16,14 +16,13 @@ def add_user(
         is_admin):
 
     # get salt and password
-    hashed, salt = get_salt_and_password(password=password)
+    hashed = generate_password_hash(password=password)
     created_at = datetime.now(timezone.utc)
 
     with Session(engine) as session:
         new_user = User(
             email=email,
             username=username,
-            salt=salt,
             password=hashed,
             created_at=created_at,
             is_admin=is_admin,
