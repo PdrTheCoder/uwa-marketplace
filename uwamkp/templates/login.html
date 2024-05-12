@@ -71,7 +71,7 @@
                 <form action="/auth/login" method="POST">
                     {{ form.csrf_token }}
                     <div class="form-group">
-                    <p>{{ form.email.label }} {{ form.email(class="form-control") }}</p>
+                    <p>{{ form.email.label(style="font-weight: bold") }} {{ form.email(class="form-control") }}</p>
                     {% if form.email.errors %}
                     <ul class="errors">
                         {% for error in form.email.errors %}
@@ -81,7 +81,7 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    <p>{{ form.password.label }} {{ form.password(class="form-control") }}</p>
+                    <p>{{ form.password.label(style="font-weight: bold") }} {{ form.password(class="form-control") }}</p>
                     {% if form.password.errors %}
                     <ul class="errors">
                         {% for error in form.password.errors %}
