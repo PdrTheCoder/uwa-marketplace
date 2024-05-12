@@ -15,9 +15,10 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        hashed_password = generate_password_hash(form.password.data)
         user = User(email=form.email.data.lower(),
                     username=form.username.data,
-                    password=form.password.data,
+                    password=hashed_password,
                     created_at=datetime.now(timezone.utc), # timezone-aware UTC datetime
                     is_admin=False,
                     deleted=False)
