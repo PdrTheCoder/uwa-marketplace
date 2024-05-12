@@ -3,6 +3,7 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import flash
+from flask_login import login_user
 from uwamkp.models import db
 from uwamkp.models import User
 from uwamkp.forms import LoginForm
@@ -22,6 +23,7 @@ def login():
             stmt = select(User).where(User.email == form.email.data)
             user = db.session.scalars(stmt).one_or_none()
             if user and user.verify_password(form.password.data):
+                login_user(user)
                 # TODO later change to main page
                 return redirect('/mylisting/listings')
             else:

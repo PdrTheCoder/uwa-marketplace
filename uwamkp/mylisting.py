@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import render_template
 from flask import flash
+from flask_login import login_required
 from uwamkp.models import db
 from uwamkp.models import Listing
 from sqlalchemy import select
@@ -12,6 +13,7 @@ bp = Blueprint('mylisting', __name__, url_prefix='/mylisting')
 
 
 @bp.route('/listings', methods=["GET"])
+@login_required
 def my_listing():
     # TODO get current user id
     # TODO maybe pagination later, maybe not

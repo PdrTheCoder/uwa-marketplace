@@ -8,7 +8,7 @@
     <ul class=flashes>
         {% for category, message in messages %}
         <div class="alert alert-{{ category }} " role="alert">
-        {{ message }}
+            {{ message }}
         </div>
         {% endfor %}
     </ul>
@@ -28,21 +28,28 @@
         <div class="container-fluid">
             <!-- Navbar brand -->
             <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                <h5 class="pt-1">UWA MKP</h5>
+                <h5 class="pt-1">UWA Marketplace</h5>
             </a>
 
+
+            {% if current_user.is_authenticated %}
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Reserve1</a>
+                        <a class="nav-link" href="#">Explore</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Reserve2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Reserve3</a>
+                        <a class="nav-link" href="#">My Listing</a>
                     </li>
                 </ul>
+            </div>
+            {% endif %}
+
+            <div class="d-flex user-profile">
+                {% if current_user.is_authenticated %}
+                    <span>Hi {{ current_user.username }}!</span>
+                    <a class="nav-link" href="/auth/logout" >Logout</a>
+                {% endif %}
             </div>
             <!-- Collapsible wrapper -->
         </div>
