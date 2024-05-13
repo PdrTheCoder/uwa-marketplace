@@ -1,5 +1,4 @@
 from datetime import datetime
-from datetime import timezone
 from flask import Blueprint
 from flask import flash
 from flask import render_template
@@ -23,6 +22,7 @@ import re  # Regular expression module for validating email and username
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -31,8 +31,8 @@ def register():
         user = User(email=form.email.data.lower(),
                     username=form.username.data,
                     password=hashed_password,
-                    created_at=datetime.now(
-                      .utc), # timezone-aware UTC datetime
+                    # timezone-aware UTC datetime
+                    created_at=datetime.now(datetime.utc),
                     is_admin=False,
                     deleted=False)
         db.session.add(user)
@@ -69,4 +69,4 @@ def login():
 def logout():
     logout_user()
     flash('You have been logged out.')
-    return redirect(url_for('main.index'))
+    return redirect(INDEX_ANONYMOUS)
