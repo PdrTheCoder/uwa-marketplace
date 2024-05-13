@@ -1,10 +1,22 @@
-from datetime import datetime,timezone
-from flask import render_template, Blueprint, request, redirect, url_for, flash
+from datetime import datetime
+from datetime import timezone
+from flask import Blueprint
+from flask import flash
+from flask import render_template
+from flask import request
+from flask import redirect
+from flask import url_for
+from flask_login import login_required
+from flask_login import login_user
+from flask_login import logout_user
 from uwamkp.models import db
 from uwamkp.models import User
-from uwamkp.forms import LoginForm,RegistrationForm
+from uwamkp.forms import LoginForm
+from uwamkp.forms import RegistrationForm
+from uwamkp.constants import INDEX_ANONYMOUS
+from uwamkp.constants import INDEX_LOGGED
+
 from sqlalchemy import select
-from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash
 import re  # Regular expression module for validating email and username
 
@@ -19,7 +31,8 @@ def register():
         user = User(email=form.email.data.lower(),
                     username=form.username.data,
                     password=hashed_password,
-                    created_at=datetime.now(timezone.utc), # timezone-aware UTC datetime
+                    created_at=datetime.now(
+                      .utc), # timezone-aware UTC datetime
                     is_admin=False,
                     deleted=False)
         db.session.add(user)
@@ -33,7 +46,6 @@ def register():
     return render_template('signup.html', form=form)
 
 
-
 @bp.route('/login', methods=["GET", "POST"])
 def login():
     form = LoginForm()
@@ -44,20 +56,17 @@ def login():
             stmt = select(User).where(User.email == form.email.data)
             user = db.session.scalars(stmt).one_or_none()
             if user and user.verify_password(form.password.data):
-                # TODO later change to main page
-                return redirect('/mylisting/listings')
+                login_user(user)
+                return redirect(INDEX_LOGGED)
             else:
                 flash('Wrong email and password combination \
                     or email does not exist', 'danger')
         return render_template("login.html", form=form)
-    
+
+
 @bp.route('/logout')
 @login_required
 def logout():
     logout_user()
     flash('You have been logged out.')
     return redirect(url_for('main.index'))
-
-
-
-

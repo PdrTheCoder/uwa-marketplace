@@ -6,3 +6,12 @@
 .flashes {
     padding-left: 0px!important;
 }
+
+.user-profile > * {
+    color: white;
+    margin-left: 10px;
+}
+
+.bg-primary {
+    background-color: #003087!important;
+}

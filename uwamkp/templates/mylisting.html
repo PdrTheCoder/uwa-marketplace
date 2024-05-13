@@ -9,16 +9,31 @@
 <div class="subpage row">
     <section class="profile col-3">
         <section id="basic">
-            <div class="centered">
-                <div class="circle">
-                    <p class="circle-inner">AY</p>
-                </div>
+            <div class="rounded username-card centered mb-3">
+                <h3 class="h2 text-white mb-0">{{ username }}</h3>
             </div>
 
-            <div class="centered">
-                <h4>Pedro Wang</h4>
-                <h5>Python Programmer</h5>
-            </div>
+            <ul class="list-unstyled">
+                <li class="mb-2">
+                    <span class="h6">Username:</span>
+                    <br/>
+                    <span>{{ username }}</span> 
+                </li>
+
+                <li class="mb-2">
+                    <span class="h6">Email:</span>
+                    <br/>
+                    <span>{{ email }}</span> 
+                </li>
+
+                <li class="mb-2">
+                    <span class="h6">Created At:</span>
+                    <br/>
+                    <span>{{ created_at }}</span> 
+                </li>
+            </ul>
+
+
         </section>
     </section>
     <div class="listing-list col-9 row">
@@ -39,12 +54,13 @@
                     <span class="badge text-bg-primary">{{ listing.condition }}</span>
                     {% endif %}
                     {% if listing.condition == "Used - Fair" %}
-                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
+                    <span class="badge text-bg-primay">{{ listing.condition }}</span>
                     {% endif %}
                 </div>
                 <div class="card-footer">
                     <a type="button" class="btn btn-sm btn-outline-primary">Edit</a>
                     <button type="button" class="btn btn-sm btn-outline-danger c-delete-listing" id="delete-{{listing.id}}">Delete</button>
+                    <button type="button" class="btn btn-sm btn-outline-info float-end" id="mark-{{listing.id}}">Mark As Soldout</button>
                 </div>
             </div>
         </div>

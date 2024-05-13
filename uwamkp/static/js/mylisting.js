@@ -5,11 +5,12 @@ $(function() {
 
         // send fetch request
         fetch(`/mylisting/listings/${listingID}`, {
-            method: "DELETE",
+            method: "PATCH",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify( {deleted: true }) ,
             redirect: "follow",
         }).then((res) => {
             let resJson = res.json();
