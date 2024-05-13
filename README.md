@@ -35,3 +35,7 @@ This is a group project for CITS5505. The software aims to provide a trading pla
 
 # Add some data for dev
 Can use insert_dev_data.py to insert some sample data.
+
+# Login username and password
+username: user_1   email:12345678@student.uwa.edu.au    password:12345678
+admin:     

@@ -7,7 +7,7 @@ from uwamkp.models import db
 from uwamkp.models import User
 from uwamkp.auth import bp as auth_bp
 from uwamkp.mylisting import bp as mylisting_bp
-from uwamkp.signup import bp as signup_bp
+
 
 
 # create the app and db
@@ -28,7 +28,7 @@ login_manager.init_app(app)
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(mylisting_bp)
-app.register_blueprint(signup_bp)
+
 
 
 @login_manager.user_loader
