@@ -11,6 +11,7 @@ from uwamkp.auth import bp as auth_bp
 from uwamkp.mylisting import bp as mylisting_bp
 from uwamkp.constants import INDEX_LOGGED
 from uwamkp.constants import INDEX_ANONYMOUS
+from uwamkp.showcase import showcase_bp 
 
 
 # create the app and db
@@ -31,6 +32,8 @@ login_manager.init_app(app)
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(mylisting_bp)
+app.register_blueprint(showcase_bp)
+
 
 
 

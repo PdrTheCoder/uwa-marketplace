@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input type="text" id="search-input" class="form-control" placeholder="Search for items...">
+        </div>
+        <div class="col-md-4">
+            <select id="sort-select" class="form-control" onchange="sortItems()">
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="price_low_high">Price: Low to High</option>
+                <option value="price_high_low">Price: High to Low</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button onclick="searchItems()" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+
+    <div class="row" id="products-container">
+        <!-- Products will be dynamically loaded here -->
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
