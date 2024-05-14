@@ -12,6 +12,8 @@ from uwamkp.mylisting import bp as mylisting_bp
 from uwamkp.constants import INDEX_LOGGED
 from uwamkp.constants import INDEX_ANONYMOUS
 from uwamkp.showcase import showcase_bp 
+from flask import render_template
+from uwamkp.models import Listing
 
 
 # create the app and db
@@ -50,3 +52,8 @@ def slash():
         return redirect(INDEX_LOGGED)
     else:
         return redirect(INDEX_ANONYMOUS)
+    
+@app.route('/showcase')
+def showcase():
+    listings = Listing.query.filter_by(deleted=False).limit(12).all()  # 取12条未删除的商品数据
+    return render_template('Showcase.html', listings=listings)

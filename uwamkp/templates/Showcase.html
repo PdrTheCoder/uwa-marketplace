@@ -20,7 +20,17 @@
     </div>
 
     <div class="row" id="products-container">
-        <!-- Products will be dynamically loaded here -->
+        {% for listing in listings %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ listing.title }}</h5>
+                    <p class="card-text">Price: {{ listing.price }} AUD</p>
+                    <p class="card-text">Seller ID: {{ listing.seller_id }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 
     <div class="row mt-4">

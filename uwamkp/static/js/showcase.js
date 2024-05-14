@@ -1,11 +1,17 @@
 function searchItems() {
     const query = document.getElementById('search-input').value;
-    // Implement AJAX request to update product list
+    // Implementing AJAX requests to update product listings
     console.log('Searching for:', query);
 }
 
 function sortItems() {
     const sortValue = document.getElementById('sort-select').value;
-    // Implement an AJAX request to update the product list according to the selected sorting option.
+    // Implement AJAX requests to update the product list based on the selected sorting options
     console.log('Sorting by:', sortValue);
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Perform initialisation after the page has loaded
+    searchItems(); // Initial loading of product list
+    sortItems();   // Initial load sorting
+});
