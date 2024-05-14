@@ -2,7 +2,6 @@
 {% block title %}Product details{% endblock %}
 {% block content %}
 
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style-products.css') }}">
 
 <div class="container">
@@ -36,8 +35,10 @@
         <div class="col-md-8">
             <!-- message board to seller -->
             <h4>Post a Message</h4>
-            <textarea class="form-control mt-2" id="messageInput" placeholder="Enter your message here..."></textarea>
-            <button class="btn btn-success mt-2" onclick="sendMessage()">Post Message</button>
+            <form id="messageForm" name="postMessage">
+                <textarea class="form-control mt-2" id="messageInput" placeholder="Enter your message here..."></textarea>
+                <button class="btn btn-success mt-2" onclick="postMessage()">Post Message</button>
+            </form>
         </div>
     </div>
     <div class="row">
@@ -52,31 +53,31 @@
 </div>
 
 <script>
-function postMessage() 
-    var message = document.getElementById('messageInput').value;
-    var messageBoard = document.querySelector('.message-board');
+    function postMessage(){
+        var message = document.getElementById('messageInput').value;
+        var messageBoard = document.querySelector('.message-board');
 
-    if (message.trim() === '') {
-        alert('Please enter your message.'); 
-        return;
-    }
+        if (message.trim() === '') {
+            alert('Please enter your message.'); 
+            return;
+        }
 
-    var now = new Date();
-    var formattedDate = now.getFullYear() + '-' + 
-                        (now.getMonth() + 1).toString().padStart(2, '0') + '-' + 
-                        now.getDate().toString().padStart(2, '0') + ' ' + 
-                        now.getHours().toString().padStart(2, '0') + ':' + 
-                        now.getMinutes().toString().padStart(2, '0');
-                        
-    var newMessage = <div class="card mt-2">
-                          <div class="card-body">
-                              <p>${message}</p>
-                              <small>Posted by You on ${formattedDate}</small>
-                          </div>
-                      </div>;
+        var now = new Date();
+        var formattedDate = now.getFullYear() + '-' + 
+                            (now.getMonth()+1).toString().padStart(2,'0') + '-' + 
+                            now.getDate().toString().padStart(2,'0') + ' ' + 
+                            now.getHours().toString().padStart(2,'0') + ':' + 
+                            now.getMinutes().toString().padStart(2,'0')         
+        var newMessage = <div class="card mt-2">
+                            <div class="card-body">
+                                <p>${message}</p>
+                                <small>Posted by You on ${formattedDate}</small>
+                            </div>
+                        </div>;
 
-    messageBoard.innerHTML += newMessage;
-    document.getElementById('messageInput').value = ''; 
+        messageBoard.innerHTML += newMessage;
+        document.getElementById('messageInput').value = ''; 
+        }
 </script>
 
 {% endblock %}

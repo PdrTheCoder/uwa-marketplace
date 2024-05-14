@@ -5,10 +5,12 @@ from flask import flash
 from uwamkp import app
 from uwamkp.models import db
 from uwamkp.models import Listing
+from uwamkp.models import Base
+from uwamkp.models import User
 
 bp = Blueprint('product', __name__)
 
-# @bp.route('/addproduct', methods=['GET'])
+# todo:login required
 @bp.route('/addproduct', methods=['GET','POST'])
 
 def addproduct():
@@ -39,10 +41,12 @@ def addproduct():
     return render_template("addproduct.html")
 
 
-@bp.route('/details',methods=['GET'])
-# @bp.route('/details/<int:id>',methods=['GET','POST'])
-def details():
-    # product = Listing.query.get(id)
-    # if not product:
-    #     flash("Product not exsited ")
+@bp.route('/details/<int:id>',methods=['GET','POST'])
+def details(id):
+    product = Listing.query.get(id)
     return render_template('details.html')
+
+# @bp.route('/details/<int:id>',methods=['GET','POST'])
+# def details(id):
+#     product = Listing.query.get(id)
+#     return render_template('details.html')

@@ -1,23 +1,16 @@
 /* general style for add produts.html and details.html */
 .title{
     font-weight: bold;
-    font-size: 32px;
+    font-size: 28px;
 }
 
 .basicinfo{
     font-weight: bold;
-    font-size: 26px;
+    font-size: 22px;
 }
 
 .container {
     padding: 20px;
-}
-
-.seller-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10
 }
 
 /* add products */
@@ -43,7 +36,11 @@
     margin-right: 10px;
 }
 
-
-
 /* products details */
+.seller-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10
+}
 
