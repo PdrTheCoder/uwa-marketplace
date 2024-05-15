@@ -48,6 +48,7 @@ class Listing(Base):
     __tablename__ = 'listing'
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     title: Mapped[str] = mapped_column(VARCHAR(60), nullable=False)
+    # For condition
     condition: Mapped[int] = mapped_column(SMALLINT, nullable=False)
     price: Mapped[float] = mapped_column(DECIMAL, nullable=False)
     description: Mapped[str] = mapped_column(TEXT, nullable=False)
@@ -76,7 +77,7 @@ class Listing(Base):
             "price": round(self.price, 2),
             "description": self.description,
             "seller_id": self.seller_id,
-            "seller_username": self.seller.username if self.seller else "Unknown",  # 添加检查
+            "seller_username": self.seller.username, 
             "suspended": self.suspended,
             "sold": self.sold,
             "deleted": self.deleted,
