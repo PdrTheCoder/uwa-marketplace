@@ -1,0 +1,17 @@
+.myrow {
+    margin-top: 20px;
+}
+
+.centered {
+    text-align: center;
+}
+
+.list-desc {
+  height: 90px;
+  overflow: hidden;
+}
+
+.username-card {
+  padding: 1.9em 1.9em 1.9em 1.9em!important;
+  background-color: #50c4ed;
+}
