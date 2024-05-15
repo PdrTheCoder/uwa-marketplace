@@ -12,8 +12,6 @@ from uwamkp.mylisting import bp as mylisting_bp
 from uwamkp.constants import INDEX_LOGGED
 from uwamkp.constants import INDEX_ANONYMOUS
 from uwamkp.showcase import showcase_bp 
-from flask import render_template
-from uwamkp.models import Listing
 
 
 # create the app and db
