@@ -42,11 +42,9 @@ def showcase():
         listings_dict = [listing.to_dict() for listing in listings_paginated]
     except Exception as e:
         print(f"Error converting listings to dict: {e}")
-        return "An error occurred while converting listings to dict", 500
+        listings_dict = []
 
     total_pages = (total + per_page - 1) // per_page
-
-    print(f"Total listings found: {total}, total pages: {total_pages}")
 
     try:
         return render_template('Showcase.html', listings=listings_dict, page=page, total_pages=total_pages, query=search_query, sort=sort_by)
