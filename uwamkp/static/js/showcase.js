@@ -1,15 +1,15 @@
 function searchItems() {
     const query = document.getElementById('search-input').value;
     const sort = document.getElementById('sort-select').value;
-    console.log(`Searching for: ${query}, Sorting by: ${sort}`);
-    fetchListings(1, query, sort);  // Reset to first page on new search
+    const url = `/showcase?query=${query}&sort=${sort}`;
+    window.location.href = url;
 }
 
 function sortItems() {
-    const sort = document.getElementById('sort-select').value;
     const query = document.getElementById('search-input').value;
-    console.log(`Sorting by: ${sort}, Searching for: ${query}`);
-    fetchListings(1, query, sort);  // Reset to first page on new sort
+    const sort = document.getElementById('sort-select').value;
+    const url = `/showcase?query=${query}&sort=${sort}`;
+    window.location.href = url;
 }
 
 function fetchListings(page, query = '', sort = 'newest') {

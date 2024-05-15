@@ -37,6 +37,7 @@ def showcase():
         start = (page - 1) * per_page
         end = start + per_page
         listings_paginated = listings[start:end]
+
         listings_dict = [listing.to_dict() for listing in listings_paginated]
 
         total_pages = (total + per_page - 1) // per_page

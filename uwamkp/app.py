@@ -53,7 +53,3 @@ def slash():
     else:
         return redirect(INDEX_ANONYMOUS)
     
-@app.route('/showcase')
-def showcase():
-    listings = Listing.query.filter_by(deleted=False).limit(12).all()  # 取12条未删除的商品数据
-    return render_template('Showcase.html', listings=listings)
