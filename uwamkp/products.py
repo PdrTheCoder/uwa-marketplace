@@ -1,5 +1,7 @@
 from flask import Blueprint
 from flask import request
+from flask import redirect
+from flask import url_for
 from flask import render_template
 from flask import flash
 from uwamkp.models import db
@@ -43,8 +45,3 @@ def addproduct():
 def details(listing_id):
     listing = db.session.query(Listing).get(listing_id)
     return render_template('details.html', listing=listing.to_dict())
-
-# @bp.route('/details/<int:id>',methods=['GET','POST'])
-# def details(id):
-#     product = Listing.query.get(id)
-#     return render_template('details.html')
