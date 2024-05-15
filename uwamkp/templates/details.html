@@ -12,14 +12,13 @@
         </div>
         <div class="col-md-6">
             <!-- goods details -->
-            <h1 class="title">Title</h1>
-            <p>{{ product.title }}</p>
+            <h2>{{ listing.title }}</h2>
             <h2 class="basicinfo">Price:</h2>
-            <p>${{ product.price }}</p>
+            <p>${{ listing.price }}</p>
             <h2 class="basicinfo">Condition:</h2>
-            <p>{{ ['New', 'Used - Like New', 'Used - Good', 'Used - Fair'][product.condition] }}</p>
+            <p>{{ listing.condition }}</p>
             <h2 class="basicinfo">Description:</h2>
-            <p>{{ product.description }}</p>
+            <p>{{ listing.description }}</p>
         </div>
     </div>
 
@@ -27,8 +26,8 @@
         <div class="col-md-4">
             <!-- Seller information -->
             <h4>Seller Information</h4>
-            <p><strong>Username:</strong> {{ seller.username }}</p>
-            <p><strong>User ID:</strong> {{ Listing.seller_id }}</p>
+            <p><strong>Username:</strong> {{ listing.seller_name }}</p>
+            <p><strong>User ID:</strong> {{ listing.seller_id }}</p>
             <!-- seller avatar haven't added -->
             <!-- <img src="{{ url_for('static', filename='#sellerimage') }}" alt="Seller Photo" class="seller-img"> -->
         </div>
