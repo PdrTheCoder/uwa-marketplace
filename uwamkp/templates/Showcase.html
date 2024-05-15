@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ listing.title }}</h5>
                     <p class="card-text">Price: {{ listing.price }} AUD</p>
-                    <p class="card-text">Seller ID: {{ listing.seller_id }}</p>
+                    <p class="card-text">Seller Username: {{ listing.seller_username }}</p>
                 </div>
             </div>
         </div>
@@ -37,15 +37,20 @@
         <div class="col-12">
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('showcase.showcase', page=page-1) }}">Previous</a>
+                    </li>
+                    {% for p in range(1, total_pages + 1) %}
+                    <li class="page-item {% if p == page %}active{% endif %}">
+                        <a class="page-link" href="{{ url_for('showcase.showcase', page=p) }}">{{ p }}</a>
+                    </li>
+                    {% endfor %}
+                    <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('showcase.showcase', page=page+1) }}">Next</a>
+                    </li>
                 </ul>
             </nav>
         </div>
     </div>
 </div>
 {% endblock %}
-
