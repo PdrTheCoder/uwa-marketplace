@@ -1,3 +1,14 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.first-wrapper {
+    height: auto;
+    min-height: calc(100% - 56px)!important;
+}
+
 .center-part {
     margin-top: 15px;
     margin-bottom: 10px;
