@@ -1,33 +1,34 @@
 function searchItems() {
     const query = document.getElementById('search-input').value;
-    const page = 1;  // Reset to first page on new search
-    fetchListings(page, query);
+    const sort = document.getElementById('sort-select').value;
+    console.log(`Searching for: ${query}, Sorting by: ${sort}`);
+    fetchListings(1, query, sort);  // Reset to first page on new search
 }
 
 function sortItems() {
-    const sortValue = document.getElementById('sort-select').value;
-    const page = 1;  // Reset to first page on new sort
-    fetchListings(page, null, sortValue);
+    const sort = document.getElementById('sort-select').value;
+    const query = document.getElementById('search-input').value;
+    console.log(`Sorting by: ${sort}, Searching for: ${query}`);
+    fetchListings(1, query, sort);  // Reset to first page on new sort
 }
 
-function fetchListings(page, query = null, sort = null) {
-    let url = `/showcase/?page=${page}`;
-    if (query) {
-        url += `&query=${query}`;
-    }
-    if (sort) {
-        url += `&sort=${sort}`;
-    }
+function fetchListings(page, query = '', sort = 'newest') {
+    let url = `/showcase/?page=${page}&query=${encodeURIComponent(query)}&sort=${sort}`;
+    console.log(`Fetching listings from: ${url}`);
 
     fetch(url)
         .then(response => response.text())
         .then(html => {
             document.querySelector('.container').innerHTML = html;
+            console.log('Listings fetched and updated.');
         })
         .catch(error => console.warn('Error fetching listings:', error));
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    searchItems(); // Initial loading of product list
-    sortItems();   // Initial load sorting
+    const searchButton = document.querySelector('.btn-primary');
+    searchButton.addEventListener('click', searchItems);
+
+    const sortSelect = document.getElementById('sort-select');
+    sortSelect.addEventListener('change', sortItems);
 });
