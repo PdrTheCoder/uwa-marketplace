@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}Product details{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-products.css') }}">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- image -->
+            <img src="{{ url_for('static', filename='#..') }}" alt="Product Image" class="img-fluid" width="480px" height="310px">
+        </div>
+        <div class="col-md-6">
+            <!-- goods details -->
+            <h2>{{ listing.title }}</h2>
+            <h2 class="basicinfo">Price:</h2>
+            <p>${{ listing.price }}</p>
+            <h2 class="basicinfo">Condition:</h2>
+            <p>{{ listing.condition }}</p>
+            <h2 class="basicinfo">Description:</h2>
+            <p class="description-box">{{ listing.description }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Seller information -->
+            <h4>Seller Information</h4>
+            <p><strong>Seller name:</strong> {{ listing.seller_name }}</p>
+            <p><strong>Seller ID:</strong> {{ listing.seller_id }}</p>
+            <!-- seller avatar haven't added -->
+            <!-- <img src="{{ url_for('static', filename='#sellerimage') }}" alt="Seller Photo" class="seller-img"> -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <!-- message board to seller -->
+            <!-- <h4>Post a Message</h4> -->
+            <form id="messageForm" method="POST" class="messagebox">
+                 {{ form.hidden_tag() }}
+                {{ form.messageContent(class="form-control mt-2", placeholder="Enter your message here...") }}
+                {% if form.messageContent.errors %}
+                    {% for error in form.messageContent.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                {% endif %} 
+                <button type="button" class="btn btn-secondary cancelbtn" onclick="confirmCancel()">Cancel</button>
+                <button type="submit" class="btn btn-dark postbtn"> Post Message</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <!-- message board -->
+        <div class="col-md-4">
+            <h4>Message Board</h4>
+            <hr width="900px">
+            {% for message in messages %}
+            <div class="message">
+                <p class="message-content">{{ messageContent.message }}</p>
+                <div class="message-footer">
+                    <span class="username">{{ messageContent.current_user.username }}</span> 
+                    <b> / </b>
+                    <span class="timestamp">{{ messageContent.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                </div>
+            </div>
+            {% else %}
+            <p> - No messages yet :)</p>
+            {% endfor %}
+            <hr width="900px">
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- cancel button script -->
+<script>
+    function confirmCancel(){
+        var confirmation = confirm('Are you sure you want to quit?');
+        if (confirmation) {
+            window.location.href="/";
+        }
+        // Stay in the original webpage
+    }
+</script>
+
+
+<script>
+    function postMessage(){
+        var message = document.getElementById('messageInput').value;
+        var messageBoard = document.querySelector('.message-board');
+
+        if (message.trim() === '') {
+            alert('Please enter your message.'); 
+            return;
+        }
+
+        var now = new Date();
+        var formattedDate = now.getFullYear() + '-' + 
+                            (now.getMonth()+1).toString().padStart(2,'0') + '-' + 
+                            now.getDate().toString().padStart(2,'0') + ' ' + 
+                            now.getHours().toString().padStart(2,'0') + ':' + 
+                            now.getMinutes().toString().padStart(2,'0')         
+        var newMessage = <div class="card mt-2">
+                            <div class="card-body">
+                                <p>${message}</p>
+                                <small>Posted by You on ${formattedDate}</small>
+                            </div>
+                        </div>;
+
+        messageBoard.innerHTML += newMessage;
+        document.getElementById('messageInput').value = ''; 
+        }
+</script>
+
+{% endblock %}

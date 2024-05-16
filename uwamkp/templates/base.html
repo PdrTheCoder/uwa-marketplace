@@ -22,6 +22,7 @@
 </head>
 
 <body>
+    <div class="first-wrapper">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <!-- Container wrapper -->
@@ -57,8 +58,8 @@
     </nav>
     <!-- Navbar -->
 
-    <div id="content">
-        <div class="row center-part">
+    <div id="content container-fluid">
+        <div class="center-part row mt-3" style="margin-right: auto; margin-left: auto;">
             <div class="col-2"></div>
             <div class="col-8">
                 {% block content %}{% endblock %}
@@ -66,9 +67,10 @@
             <div class="col-2"></div>
         </div>
     </div>
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-primary text-center text-white fixed-bottom">
+    <footer class="bg-primary text-center text-white">
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
             CITS5505 Group Project - UWA Marketplace
         </div>
