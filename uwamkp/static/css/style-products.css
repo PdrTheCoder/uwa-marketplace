@@ -1,0 +1,75 @@
+/* general style for add produts.html and details.html */
+.title{
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.basicinfo{
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.container {
+    padding: 20px;
+}
+
+/* add products */
+.image-upload {
+    border: 1px dashed #ccc;
+    padding: 10px;
+}
+
+.preview img {
+    width: 100%;
+    height: auto;
+}
+
+.description-box {
+    position: fixed;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.action-btns button {
+    margin-right: 10px;
+}
+
+/* products details */
+.seller-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10
+}
+
+.description-box {
+    width: 400px;
+    word-wrap: break-word;
+    height: auto;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.messagebox{
+    margin-top: 10px;
+    margin-bottom:20px;
+    width: 900px;
+    overflow-y:auto;
+}
+
+.message-board{
+    width: 900px;
+    height:auto;
+    overflow-y:auto;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.btn{
+    margin-top: 10px; 
+    margin-right: 10px;
+}
+
