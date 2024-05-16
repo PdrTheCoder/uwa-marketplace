@@ -31,6 +31,10 @@
                     <br/>
                     <span>{{ created_at }}</span> 
                 </li>
+                <li>
+                    <!-- TODO change to addproduct later -->
+                    <a type="button" class="btn btn-primary" href={{ url_for('mylisting.my_listing') }}>Sell Something</a>
+                </li>
             </ul>
 
 
@@ -39,16 +43,16 @@
     <div class="listing-list col-9 row">
         {% for listing in listings %}
         <div class="col-sm-6 mb-3 mb-sm-0">
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">{{ listing.title }}</h5>
+                    <h5 class="card-title">{% if listing.sold %}<span class="badge text-bg-info">SOLD</span>{% endif %}  {{ listing.title }}</h5>
                     <div class="card-text list-desc">{{ listing.description }}</div>
                     <span>{{ listing.price }} AUD</span>
                     {% if listing.condition == "New" %}
-                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
+                    <span class="badge text-bg-success">{{ listing.condition }}</span>
                     {% endif %}
                     {% if listing.condition == "Used - Like New" %}
-                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
+                    <span class="badge text-bg-info">{{ listing.condition }}</span>
                     {% endif %}
                     {% if listing.condition == "Used - Good" %}
                     <span class="badge text-bg-primary">{{ listing.condition }}</span>
@@ -59,8 +63,10 @@
                 </div>
                 <div class="card-footer">
                     <a type="button" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <button type="button" class="btn btn-sm btn-outline-danger c-delete-listing" id="delete-{{listing.id}}">Delete</button>
-                    <button type="button" class="btn btn-sm btn-outline-info float-end" id="mark-{{listing.id}}">Mark As Soldout</button>
+                    <!-- <button type="button" class="btn btn-sm btn-outline-danger c-delete-listing" id="delete-{{listing.id}}">Delete</button> -->
+                    {% if not listing.sold %}
+                    <button type="button" class="btn btn-sm btn-outline-info float-end mark-sold" listingId="{{listing.id}}">Mark As Sold</button>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -68,24 +74,22 @@
     </div>
 </div>
 
-<!-- Modal Part Maybe to do it later -->
-
-<!-- <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmSold" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Delete Listing</h1>
+                <h1 class="modal-title fs-5">Confirm Sold?</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete the listing?
+                Are you sure you want mark it as SOLD?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <input id="toDeleteListingId" value="" hidden />
-                <button type="button" class="btn btn-danger">I'm Sure, Please.</button>
+                <button type="button" class="btn btn-danger" id="btn-yes-sold">I'm Sure, Please.</button>
             </div>
         </div>
     </div>
-</div> -->
+</div>
 {% endblock %}
