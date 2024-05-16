@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import redirect
+from flask import url_for
 from flask_login import LoginManager
 from flask_login import current_user
 from flask_migrate import Migrate
@@ -10,9 +11,8 @@ from uwamkp.models import User
 from uwamkp.auth import bp as auth_bp
 from uwamkp.mylisting import bp as mylisting_bp
 from uwamkp.products import bp as products_bp
-from uwamkp.constants import INDEX_LOGGED
-from uwamkp.constants import INDEX_ANONYMOUS
 from uwamkp.showcase import showcase_bp 
+
 
 
 # create the app and db
@@ -47,7 +47,6 @@ def load_user(user_id):
 @app.route("/")
 def slash():
     if current_user.is_authenticated:
-        return redirect(INDEX_LOGGED)
+        return redirect(url_for("mylisting.my_listing"))
     else:
-        return redirect(INDEX_ANONYMOUS)
-    
+        return redirect(url_for("auth.login"))

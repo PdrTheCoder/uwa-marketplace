@@ -33,7 +33,7 @@
                 </li>
                 <li>
                     <!-- TODO change to addproduct later -->
-                    <a type="button" class="btn btn-primary" href={{ url_for('mylisting.my_listing') }}>Sell Something</a>
+                    <a type="button" class="btn btn-primary" href={{ url_for('product.addproduct') }}>Sell Something</a>
                 </li>
             </ul>
 
@@ -60,13 +60,11 @@
                     {% if listing.condition == "Used - Fair" %}
                     <span class="badge text-bg-primay">{{ listing.condition }}</span>
                     {% endif %}
-                </div>
-                <div class="card-footer">
-                    <a type="button" class="btn btn-sm btn-outline-primary">Edit</a>
                     <!-- <button type="button" class="btn btn-sm btn-outline-danger c-delete-listing" id="delete-{{listing.id}}">Delete</button> -->
                     {% if not listing.sold %}
                     <button type="button" class="btn btn-sm btn-outline-info float-end mark-sold" listingId="{{listing.id}}">Mark As Sold</button>
                     {% endif %}
+                    <a type="button" class="btn btn-sm btn-outline-primary float-end" href={{ url_for("product.edit", listing_id=1 ) }} style="margin-right: 6px;">Edit</a>
                 </div>
             </div>
         </div>

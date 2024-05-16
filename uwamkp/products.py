@@ -15,7 +15,6 @@ from uwamkp.product_forms import MessageForm
 
 bp = Blueprint('product', __name__)
 
-# todo:login required
 
 @bp.route('/addproduct', methods=['GET', 'POST'])
 @login_required
@@ -38,30 +37,52 @@ def addproduct():
                                   )
             db.session.add(new_listing)
             db.session.commit()
-            flash('Your product has been added!')
-            return redirect('mylisting/listings')
+            flash('Your listing has been added!', 'success')
+            return redirect(url_for('mylisting.my_listing'))
         except Exception as e:
             db.session.rollback()
-            flash('Error adding product.')
-            return render_template("addproduct.html",form=form)
+            flash('Error adding product.', 'error')
+            return render_template("addproduct.html", form=form)
     return render_template("addproduct.html", form=form)
 
 
-
 @bp.route('/details/<int:listing_id>', methods=['GET', 'POST'])
+@login_required
 def details(listing_id):
     listing = db.session.query(Listing).get(listing_id)
     form = MessageForm()
     if form.validate_on_submit():
-        new_message = Reply(content=form.messageContent.data, 
+        new_message = Reply(content=form.messageContent.data,
                             listing_id=listing_id,
-                            message = form.messageContent.data,
+                            message=form.messageContent.data,
                             from_user_id=current_user.id,
                             created_at=datetime.now(timezone.utc)
                             )
         db.session.add(new_message)
         db.session.commit()
         flash('Message posted!')
-        return redirect(url_for('details', listing=listing.to_dict())) 
+        return redirect(url_for('details', listing=listing.to_dict()))
     messages = db.session.query(Reply).filter_by(listing_id=listing_id).all()
     return render_template('details.html', listing=listing.to_dict(), form=form, messages=messages)
+
+
+@bp.route('/update/<int:listing_id>', methods=['GET', 'POST'])
+@login_required
+def edit(listing_id: int):
+    listing = db.session.query(Listing).get(listing_id)
+    form = PublishForm(obj=listing)
+    if form.validate_on_submit():
+        listing.title = form.title.data
+        listing.price = form.price.data
+        listing.condition = form.condition.data
+        listing.description = form.description.data
+        listing.updated_at = datetime.now(timezone.utc)
+        try:
+            db.session.commit()
+            flash('Your listing has been successfully update', 'success')
+            return redirect(url_for('mylisting.my_listing'))
+        except Exception as e:
+            db.session.rollback()
+            flash("Error updating listing", "error")
+            return render_template('updateproduct.html', form=form)
+    return render_template('updateproduct.html', form=form)

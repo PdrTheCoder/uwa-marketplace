@@ -50,9 +50,9 @@
                     {% endif %}
                 </div>
                 <div class="form-group action-btns">
-                    
                     <button type="button" class="btn btn-secondary cancelbtn" onclick="confirmCancel()">Cancel</button>
-                    <button type="submit" class="btn btn-dark publishbtn">Publish</button>
+                    <button type="submit" class="btn btn-dark publishbtn">{% block submitBtnName %}Publish{% endblock %}</button>
+                    {% block extraBtn %} {% endblock %}
                 </div>
             </form>
         </div>

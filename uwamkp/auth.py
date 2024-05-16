@@ -12,8 +12,6 @@ from uwamkp.models import db
 from uwamkp.models import User
 from uwamkp.forms import LoginForm
 from uwamkp.forms import RegistrationForm
-from uwamkp.constants import INDEX_ANONYMOUS
-from uwamkp.constants import INDEX_LOGGED
 
 from sqlalchemy import select
 from werkzeug.security import generate_password_hash
@@ -57,7 +55,7 @@ def login():
             user = db.session.scalars(stmt).one_or_none()
             if user and user.verify_password(form.password.data):
                 login_user(user)
-                return redirect(INDEX_LOGGED)
+                return redirect(url_for("mylisting.my_listing"))
             else:
                 flash('Wrong email and password combination \
                     or email does not exist', 'danger')
@@ -69,4 +67,4 @@ def login():
 def logout():
     logout_user()
     flash('You have been logged out.')
-    return redirect(INDEX_ANONYMOUS)
+    return redirect(url_for("auth.login"))
