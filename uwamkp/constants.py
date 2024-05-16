@@ -3,4 +3,4 @@ Store some constants here
 """
 
 INDEX_ANONYMOUS = '/auth/login'
-INDEX_LOGGED = '/mylisting/listings'
+INDEX_LOGGED = '/showcase'

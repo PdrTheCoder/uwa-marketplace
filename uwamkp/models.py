@@ -49,14 +49,13 @@ class Listing(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     title: Mapped[str] = mapped_column(VARCHAR(60), nullable=False)
     # For condition
-    # 0: New
+     # 0: New
     # 1: Used - Like New
     # 2: Used - Good
     # 3: Used - Fair
     condition: Mapped[int] = mapped_column(SMALLINT, nullable=False)
     price: Mapped[float] = mapped_column(DECIMAL, nullable=False)
     description: Mapped[str] = mapped_column(TEXT, nullable=False)
-    # image = Column(BLOB) # TODO later
     seller_id: Mapped[int] = mapped_column(ForeignKey(
         'user.id', ondelete='CASCADE'), nullable=False)
     suspended: Mapped[bool] = mapped_column(BOOLEAN, nullable=False)
@@ -75,6 +74,7 @@ class Listing(Base):
             2: "Used - Good",
             3: "Used - Fair"
         }
+        seller_username = self.seller.username if self.seller else "Unknown" # 
         return {
             "id": self.id,
             "title": self.title,
@@ -82,15 +82,14 @@ class Listing(Base):
             "price": round(self.price, 2),
             "description": self.description,
             "seller_id": self.seller_id,
-            "seller_name": self.seller.username,
+            "seller_username": seller_username, 
             "suspended": self.suspended,
             "sold": self.sold,
             "deleted": self.deleted,
-            "created_at": format_iso_datetime(
-                self.created_at),
-            "updated_at": format_iso_datetime(
-                self.updated_at) if self.updated_at else None
+            "created_at": format_iso_datetime(self.created_at),
+            "updated_at": format_iso_datetime(self.updated_at) if self.updated_at else None
         }
+
 
 
 class Reply(Base):
