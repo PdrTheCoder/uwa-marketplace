@@ -70,10 +70,13 @@
     color: #454444;
 }
 
-
 .btn{
     margin-top: 10px; 
     margin-right: 10px;
+}
+
+#myimg-input {
+    display: none;
 }
 
 .message-header{
@@ -82,3 +85,4 @@
     font-size:smaller;
     color: #999;
 }
+
