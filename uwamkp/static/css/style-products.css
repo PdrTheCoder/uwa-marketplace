@@ -66,6 +66,8 @@
     overflow-y:auto;
     word-wrap: break-word;
     position: relative;
+    font-size: 1em;
+    color: #454444;
 }
 
 .btn{
@@ -75,5 +77,12 @@
 
 #myimg-input {
     display: none;
+}
+
+.message-header{
+    font-weight: lighter;
+    font-style:italic;
+    font-size:smaller;
+    color: #999;
 }
 

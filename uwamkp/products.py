@@ -16,6 +16,7 @@ from uwamkp.models import Reply
 from uwamkp.product_forms import PublishForm
 from uwamkp.product_forms import MessageForm
 from werkzeug.utils import secure_filename
+from sqlalchemy import desc
 
 bp = Blueprint('product', __name__)
 
@@ -80,17 +81,18 @@ def details(listing_id):
     listing = db.session.query(Listing).get(listing_id)
     form = MessageForm()
     if form.validate_on_submit():
-        new_message = Reply(content=form.messageContent.data,
+        new_message = Reply(message=form.messageContent.data,
                             listing_id=listing_id,
-                            message=form.messageContent.data,
                             from_user_id=current_user.id,
                             created_at=datetime.now(timezone.utc)
                             )
         db.session.add(new_message)
         db.session.commit()
         flash('Message posted!', 'success')
-        return redirect(url_for('details', listing=listing.to_dict()))
-    messages = db.session.query(Reply).filter_by(listing_id=listing_id).all()
+        messages = db.session.query(Reply).filter_by(listing_id=listing_id).order_by(desc(Reply.created_at)).all()
+        return render_template('details.html', listing=listing.to_dict(), form=form, messages=messages)
+    
+    messages = db.session.query(Reply).filter_by(listing_id=listing_id).order_by(desc(Reply.created_at)).all()
     return render_template('details.html', listing=listing.to_dict(), form=form, messages=messages)
 
 
