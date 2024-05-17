@@ -13,29 +13,11 @@
         font-size: 0.9em;
     }
 
-
-    .form-control {
-        padding-right: 70px; /* Add space for the text */
-    }
-    .form-group {
-        position: relative; /* Ensure the text is positioned relative to this */
-    }
-</style>
-
-<script>
-    function togglePasswordVisibility(id) {
-        var passwordInput = document.getElementById(id);
-        var toggleButton = document.getElementById(id + "-toggle");
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            toggleButton.textContent = "Hide";
-        } else {
-            passwordInput.type = "password";
-            toggleButton.textContent = "Show";
-        }
-    }
-</script>
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+<script src="{{ url_for('static', filename='js/signup.js') }}" defer></script>
 {% endblock %}
+
 {% block content %}
 <div class="container mt-5">
     <div class="row">
@@ -68,7 +50,7 @@
                 
                 <div class="form-group mb-3">
                     {{ form.username.label(class="form-label",style="font-weight: bold") }}
-                    {{ form.username(class="form-control", placeholder="Contain letters(), numbers, dots or underscores") }}
+                    {{ form.username(class="form-control", placeholder="Start with a letter;only letters, numbers, dots or underscores") }}
                     {% if form.username.errors %}
                         <div class="alert alert-danger">
                             {% for error in form.username.errors %}
