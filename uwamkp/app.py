@@ -11,8 +11,7 @@ from uwamkp.models import User
 from uwamkp.auth import bp as auth_bp
 from uwamkp.mylisting import bp as mylisting_bp
 from uwamkp.products import bp as products_bp
-from uwamkp.showcase import showcase_bp 
-
+from uwamkp.showcase import showcase_bp
 
 
 # create the app and db
@@ -47,6 +46,6 @@ def load_user(user_id):
 @app.route("/")
 def slash():
     if current_user.is_authenticated:
-        return redirect(url_for("mylisting.my_listing"))
+        return redirect(url_for("showcase.showcase"))
     else:
         return redirect(url_for("auth.login"))

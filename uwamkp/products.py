@@ -60,7 +60,7 @@ def details(listing_id):
                             )
         db.session.add(new_message)
         db.session.commit()
-        flash('Message posted!')
+        flash('Message posted!', 'success')
         return redirect(url_for('details', listing=listing.to_dict()))
     messages = db.session.query(Reply).filter_by(listing_id=listing_id).all()
     return render_template('details.html', listing=listing.to_dict(), form=form, messages=messages)
