@@ -8,10 +8,10 @@
     <div class="row">
         <div class="col-md-6">
             <!-- image -->
-            <img src="{{ url_for('static', filename='#..') }}" alt="Product Image" class="img-fluid" width="480px" height="310px">
+            <img src="{{ url_for('static', filename=listing.image_path) }}" alt="Product Image" class="img-fluid" width="480px" height="310px">
         </div>
         <div class="col-md-6">
-            <!-- goods details -->
+            <!-- listing details -->
             <h2>{{ listing.title }}</h2>
             <h2 class="basicinfo">Price:</h2>
             <p>${{ listing.price }}</p>

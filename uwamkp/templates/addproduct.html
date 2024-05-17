@@ -4,36 +4,37 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style-products.css') }}">
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="image-upload">
-                <label for="file-input">
-                    <img src="{{ url_for('static', filename='addpic.png') }}" alt="Add photo" class="img-fluid add-photo-btn" width="480px" height="310px">
-                </label>
-                <input id="file-input" type="file" style="display:none;"/>
-                <div id="preview" class="preview"></div>
+    <form id="productForm" method="POST" enctype=multipart/form-data>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="image-upload">
+                    <label for="myimg-input">
+                        <img {% if not listing %}src="{{ url_for('static', filename='addpic.png') }}"{% else %} src="{{ url_for('static', filename=listing.image_path) }}" {% endif %} alt="Add photo"
+                            class="img-fluid add-photo-btn" width="480px" height="310px" id="img-preview">
+                    </label>
+                    {{form.photo(class="form-control", id="myimg-input")}}
+                    <div id="preview" class="preview"></div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <form id="productForm" method="POST">
+            <div class="col-md-6">
                 {{ form.hidden_tag() }}
-        
+
                 <div class="form-group">
                     <h1 class="title">Title:</h1>
                     {{ form.title(class="form-control", placeholder="Add your product title briefly") }}
                     {% if form.title.errors %}
-                        {% for error in form.title.errors %}
-                            <p class="text-danger">{{ error }}</p>
-                        {% endfor %}
+                    {% for error in form.title.errors %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
                     {% endif %}
                 </div>
                 <div class="form-group">
                     <h2 class="basicinfo">Price: </h2> $
                     {{ form.price(class="form-control", placeholder="Add price") }}
                     {% if form.price.errors %}
-                        {% for error in form.price.errors %}
-                            <p class="text-danger">{{ error }}</p>
-                        {% endfor %}
+                    {% for error in form.price.errors %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -44,32 +45,41 @@
                     <h2 class="basicinfo">Description:</h2>
                     {{ form.description(class="form-control", placeholder="Provide information including color, brand, size, type, any imperfections...", rows=4) }}
                     {% if form.description.errors %}
-                        {% for error in form.description.errors %}
-                            <p class="text-danger">{{ error }}</p>
-                        {% endfor %}
+                    {% for error in form.description.errors %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
                     {% endif %}
                 </div>
                 <div class="form-group action-btns">
                     <button type="button" class="btn btn-secondary cancelbtn" onclick="confirmCancel()">Cancel</button>
-                    <button type="submit" class="btn btn-dark publishbtn">{% block submitBtnName %}Publish{% endblock %}</button>
+                    <button type="submit" class="btn btn-dark publishbtn">{% block submitBtnName %}Publish{% endblock
+                        %}</button>
                     {% block extraBtn %} {% endblock %}
                 </div>
-            </form>
+            </div>
+
         </div>
-        {% block modal %}
-        {% endblock %}
-    </div>
+    </form>
+    {% block modal %}
+    {% endblock %}
 </div>
-        
+
 <!-- cancel button script -->
 <script>
-    function confirmCancel(){
+    function confirmCancel() {
         var confirmation = confirm('Are you sure you want to quit your editing?');
         if (confirmation) {
-            window.location.href="/";
+            window.location.href = "/";
         }
         // Stay in the original webpage
     }
+
+    $("#myimg-input").on("change", function(e){
+        const file = e.target.files;
+        if (e.target.files !== 0) {
+            $("#img-preview").attr("src", URL.createObjectURL(e.target.files[0]))
+        };
+    })
 </script>
 
 {% endblock %}

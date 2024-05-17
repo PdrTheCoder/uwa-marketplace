@@ -23,6 +23,7 @@ app.secret_key = os.environ['SECRET_KEY']
 # configure the SQLite database, relative to the app instance folder
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///uwamkp.db"
 app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
+app.config["PHOTO_FOLDER"] = 'images'
 
 db.init_app(app)
 migrate = Migrate(app, db)
