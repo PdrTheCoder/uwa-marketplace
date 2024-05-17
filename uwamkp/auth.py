@@ -58,7 +58,7 @@ def login():
                 return redirect(url_for("mylisting.my_listing"))
             else:
                 flash('Wrong email and password combination \
-                    or email does not exist', 'danger')
+                    or email does not exist', 'error')
         return render_template("login.html", form=form)
 
 
@@ -66,5 +66,5 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('You have been logged out.')
+    flash('You have been logged out.', 'info')
     return redirect(url_for("auth.login"))
