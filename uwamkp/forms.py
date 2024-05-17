@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 from wtforms import ValidationError
-from uwamkp.models import User,db
+from uwamkp.models import User
 
 
 class LoginForm(FlaskForm):
@@ -14,8 +14,7 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     # TODO remember_me = BooleanField('Keep me logged in')
-
-
+    
 class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 64),
                                              Email()])

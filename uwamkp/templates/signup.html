@@ -32,7 +32,7 @@
                 
                 <div class="mb-3">
                     {{ form.username.label(class="form-label",style="font-weight: bold") }}
-                    {{ form.username(class="form-control", placeholder="Set your username, which should show on the webpage") }}
+                    {{ form.username(class="form-control", placeholder="Letters first and only enter letters, numbers, dots or underscores") }}
                     {% if form.username.errors %}
                         <div class="alert alert-danger">
                             {% for error in form.username.errors %}
@@ -65,8 +65,7 @@
                         </div>
                     {% endif %}
                 </div>
-                
-                {{ form.submit(class="btn btn-primary") }}
+                {{ form.submit(class="btn btn-primary",style="background-color: #E1B600;") }}
             </form>
         </div>
     </div>

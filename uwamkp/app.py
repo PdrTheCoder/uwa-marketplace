@@ -13,12 +13,11 @@ from uwamkp.mylisting import bp as mylisting_bp
 from uwamkp.products import bp as products_bp
 from uwamkp.showcase import showcase_bp
 from uwamkp.introduction import bp as introduction_bp
+from uwamkp.api import bp as api_bp
 
 
 # create the app and db
 app = Flask(__name__)
-app.secret_key = os.environ['SECRET_KEY']
-
 
 # configure the SQLite database, relative to the app instance folder
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///uwamkp.db"
@@ -36,6 +35,8 @@ app.register_blueprint(mylisting_bp)
 app.register_blueprint(showcase_bp)
 app.register_blueprint(products_bp)
 app.register_blueprint(introduction_bp)
+app.register_blueprint(api_bp)
+
 
 @login_manager.user_loader
 def load_user(user_id):

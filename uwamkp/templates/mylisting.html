@@ -2,6 +2,7 @@
 
 {% block extra_head %}
 <link href={{ url_for('static', filename='/css/mylisting.css' ) }} rel="stylesheet">
+<script src={{ url_for('static', filename='/js/utils.js' ) }}></script>
 <script src={{ url_for('static', filename='/js/mylisting.js' ) }}></script>
 {% endblock %}
 
@@ -79,11 +80,11 @@
                             <span class="badge text-bg-primary">{{ listing.condition }}</span>
                             {% endif %}
                             {% if listing.condition == "Used - Fair" %}
-                            <span class="badge text-bg-primay">{{ listing.condition }}</span>
+                            <span class="badge text-bg-secondary">{{ listing.condition }}</span>
                             {% endif %}
                             {% if not listing.sold %}
                             <button type="button" class="btn btn-sm btn-outline-info float-end mark-sold"
-                                listingId="{{listing.id}}" style="margin-left: 6px">Mark As Sold</button>
+                                markURL={{url_for("api.update_listing", listing_id=listing.id)}} style="margin-left: 6px">Mark As Sold</button>
                             {% endif %}
                             <a type="button" class="btn btn-sm btn-outline-primary float-end" href={{
                                 url_for("product.edit", listing_id=listing.id ) }}>Edit</a>
@@ -133,7 +134,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input id="toDeleteListingId" value="" hidden />
+                <input id="redirectUrl" value={{url_for('mylisting.my_listing')}} hidden />
                 <button type="button" class="btn btn-danger" id="btn-yes-sold">I'm Sure, Please.</button>
             </div>
         </div>
