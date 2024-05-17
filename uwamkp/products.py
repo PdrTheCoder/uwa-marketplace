@@ -41,7 +41,7 @@ def addproduct():
             return redirect(url_for('mylisting.my_listing'))
         except Exception as e:
             db.session.rollback()
-            flash('Error adding product.', 'error')
+            flash('Error adding product.', 'danger')
             return render_template("addproduct.html", form=form)
     return render_template("addproduct.html", form=form)
 
@@ -83,6 +83,6 @@ def edit(listing_id: int):
             return redirect(url_for('mylisting.my_listing'))
         except Exception as e:
             db.session.rollback()
-            flash("Error updating listing", "error")
-            return render_template('updateproduct.html', form=form)
-    return render_template('updateproduct.html', form=form)
+            flash("Error updating listing", "danger")
+            return render_template('updateproduct.html', form=form, listing=listing)
+    return render_template('updateproduct.html', form=form, listing=listing)

@@ -40,7 +40,7 @@ def register():
             return redirect(url_for('auth.login'))
         except Exception as e:
             db.session.rollback()
-            flash('Registration failed. Please try again. Error: {}'.format(e), 'error')
+            flash('Registration failed. Please try again. Error: {}'.format(e), 'danger')
     return render_template('signup.html', form=form)
 
 
@@ -55,10 +55,10 @@ def login():
             user = db.session.scalars(stmt).one_or_none()
             if user and user.verify_password(form.password.data):
                 login_user(user)
-                return redirect(url_for("mylisting.my_listing"))
+                return redirect(url_for("showcase.showcase"))
             else:
                 flash('Wrong email and password combination \
-                    or email does not exist', 'error')
+                    or email does not exist', 'danger')
         return render_template("login.html", form=form)
 
 
