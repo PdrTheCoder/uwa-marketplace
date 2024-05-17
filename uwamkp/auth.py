@@ -29,8 +29,7 @@ def register():
         user = User(email=form.email.data.lower(),
                     username=form.username.data,
                     password=hashed_password,
-                    # timezone-aware UTC datetime
-                    created_at=datetime.now(datetime.utc),
+                    created_at=datetime.utcnow(),# timezone-aware UTC datetime
                     is_admin=False,
                     deleted=False)
         db.session.add(user)

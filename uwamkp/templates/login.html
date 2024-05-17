@@ -37,14 +37,19 @@
     }
 
     .btn-primary {
-        width: 25%; /* Full width button */
+        width: 23%; /* Full width button */
         padding: 10px;
-        background-color: #007bff; /* Bootstrap primary blue */
+        background-color: #E1B600; /*earth yellow color for button*/
         color: white;
-        border: none;
         border-radius: 4px;
         cursor: pointer;
+        margin-bottom: 20px; /* Space between buttons on small screens */
     }
+    .btn-container {
+        display: flex;
+        justify-content: space-between; /* Distributes space between the buttons */
+        margin-bottom: 10px; /* Space below the button container */
+        }
 
     .errors {
         color: #dc3545; /* Bootstrap danger color */
@@ -57,6 +62,13 @@
     @media (max-width: 400px) {
         .login-form {
             padding: 15px; /* Reduce padding on very small screens */
+        }
+        .btn-primary {
+            width: 23%; /* Full width buttons on small screens */
+            margin-bottom: 10px; /* Space between buttons on small screens */
+        }
+        .btn-container {
+            flex-direction: column; /* Stack buttons vertically on small screens */
         }
     }
 </style>
@@ -90,8 +102,13 @@
                     </ul>
                     {% endif %}
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="btn-container">
+                <button type="submit" class="btn btn-primary">Login</button>
+                </div>
                 </form>
+                <div class="btn-container">
+                <a href="{{ url_for('auth.register') }}" class="btn-custom">Still new? Register here!</a>
+                </div>
             </div>
         </div>
     </div>
