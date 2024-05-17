@@ -12,6 +12,7 @@ from uwamkp.auth import bp as auth_bp
 from uwamkp.mylisting import bp as mylisting_bp
 from uwamkp.products import bp as products_bp
 from uwamkp.showcase import showcase_bp
+from uwamkp.introduction import bp as introduction_bp
 
 
 # create the app and db
@@ -34,7 +35,7 @@ app.register_blueprint(auth_bp)
 app.register_blueprint(mylisting_bp)
 app.register_blueprint(showcase_bp)
 app.register_blueprint(products_bp)
-
+app.register_blueprint(introduction_bp)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -49,3 +50,5 @@ def slash():
         return redirect(url_for("showcase.showcase"))
     else:
         return redirect(url_for("auth.login"))
+
+
