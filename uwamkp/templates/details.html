@@ -27,17 +27,14 @@
             <!-- Seller information -->
             <h4>Seller Information</h4>
             <p><strong>Seller name:</strong> {{ listing.seller_username }}</p>
-            <p><strong>Seller ID:</strong> {{ listing.seller_id }}</p>
-            <!-- seller avatar haven't added -->
             <!-- <img src="{{ url_for('static', filename='#sellerimage') }}" alt="Seller Photo" class="seller-img"> -->
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
             <!-- message board to seller -->
-            <!-- <h4>Post a Message</h4> -->
             <form id="messageForm" method="POST" class="messagebox">
-                 {{ form.hidden_tag() }}
+                {{ form.hidden_tag() }}
                 {{ form.messageContent(class="form-control mt-2", placeholder="Enter your message here...") }}
                 {% if form.messageContent.errors %}
                     {% for error in form.messageContent.errors %}
@@ -45,28 +42,29 @@
                     {% endfor %}
                 {% endif %} 
                 <button type="button" class="btn btn-secondary cancelbtn" onclick="confirmCancel()">Cancel</button>
-                <button type="submit" class="btn btn-dark postbtn"> Post Message</button>
+                <button type="submit" class="btn btn-primary postbtn">Post Message</button>
             </form>
         </div>
     </div>
     <div class="row">
         <!-- message board -->
-        <div class="col-md-4">
+        <div class="col-md-12">
             <h4>Message Board</h4>
             <hr width="900px">
             {% for message in messages %}
             <div class="message">
-                <p class="message-content">{{ messageContent.message }}</p>
-                <div class="message-footer">
-                    <span class="username">{{ messageContent.current_user.username }}</span> 
-                    <b> / </b>
-                    <span class="timestamp">{{ messageContent.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                <div class="message-header">
+                    <span class="username">{{ message.user.username }}</span> 
+                    <span class="timestamp"> / {{ message.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                    <span class="usermail">/ <a href="mailto:{{ message.user.email }}">{{ message.user.email }}</a></span>
                 </div>
+                <p class="message-content">{{ message.message }}</p>
+                <hr width="900px">
             </div>
             {% else %}
             <p> - No messages yet :)</p>
-            {% endfor %}
             <hr width="900px">
+            {% endfor %}
         </div>
         </div>
     </div>
@@ -81,35 +79,7 @@
         }
         // Stay in the original webpage
     }
-</script>
 
-
-<script>
-    function postMessage(){
-        var message = document.getElementById('messageInput').value;
-        var messageBoard = document.querySelector('.message-board');
-
-        if (message.trim() === '') {
-            alert('Please enter your message.'); 
-            return;
-        }
-
-        var now = new Date();
-        var formattedDate = now.getFullYear() + '-' + 
-                            (now.getMonth()+1).toString().padStart(2,'0') + '-' + 
-                            now.getDate().toString().padStart(2,'0') + ' ' + 
-                            now.getHours().toString().padStart(2,'0') + ':' + 
-                            now.getMinutes().toString().padStart(2,'0')         
-        var newMessage = <div class="card mt-2">
-                            <div class="card-body">
-                                <p>${message}</p>
-                                <small>Posted by You on ${formattedDate}</small>
-                            </div>
-                        </div>;
-
-        messageBoard.innerHTML += newMessage;
-        document.getElementById('messageInput').value = ''; 
-        }
 </script>
 
 {% endblock %}
