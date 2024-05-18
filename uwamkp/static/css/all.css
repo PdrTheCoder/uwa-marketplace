@@ -23,6 +23,10 @@ html, body {
     margin-left: 10px;
 }
 
+.user-profile:hover {
+    color: rgba(255, 255, 255, 0.75);
+}
+
 .bg-primary {
     background-color: #003087!important;
 }

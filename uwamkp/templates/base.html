@@ -28,31 +28,31 @@
         <!-- Container wrapper -->
         <div class="container-fluid">
             <!-- Navbar brand -->
-            <a class="navbar-brand mt-2 mt-lg-0" href="#">
+            <a class="navbar-brand mt-2 mt-lg-0" href="/showcase">
                 <h5 class="pt-1">UWA Marketplace</h5>
             </a>
-
-
-            {% if current_user.is_authenticated %}
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if current_user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="/showcase">Explore</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/mylisting/listings">My Listing</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="/introduction">Introduction</a>
                     </li>
                 </ul>
             </div>
-            {% endif %}
 
             <div class="d-flex user-profile">
                 {% if current_user.is_authenticated %}
                     <span>Hi {{ current_user.username }}!</span>
                     <a class="nav-link" href="/auth/logout" >Logout</a>
+                {% else %}
+                    <a class="nav-link" href="/auth/login" >Sign In</a>
                 {% endif %}
             </div>
             <!-- Collapsible wrapper -->
