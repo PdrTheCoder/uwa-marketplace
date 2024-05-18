@@ -30,7 +30,11 @@ This is a group project for CITS5505. The software aims to provide a trading pla
 
 8. Run development  
    Under uwamkp folder, run  
-   `flask run --debug`   
+   `flask run --debug`  
+
+9. Run Unit tests and Selenium tests
+   `cd uwa-marketplace` 
+   `python -m unittest discover`
 
 
 # Add some data for dev
