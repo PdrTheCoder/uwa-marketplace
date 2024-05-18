@@ -28,9 +28,9 @@ class FlaskClientTestCase(unittest.TestCase):
 
     def test_login_route(self):
         # Create user in database
-        user = User(email='0000@student.uwa.edu.au', 
+        user = User(email='87654321@student.uwa.edu.au', 
                     username='test_user', 
-                    password=generate_password_hash('testpassword'),
+                    password=generate_password_hash('Test123!'),
                     created_at=datetime.now(timezone.utc),  # Include the current time for created_at
                     is_admin=False,  # Assume a default value for is_admin if it's required
                     deleted=False    # Assume a default value for deleted if it's required
@@ -38,7 +38,7 @@ class FlaskClientTestCase(unittest.TestCase):
         db.session.add(user)
         db.session.commit()
 
-        response = self.app.post('/auth/login', data={'email': '0000@student.uwa.edu.au', 'password': 'testpassword'}, follow_redirects=True)
+        response = self.app.post('/auth/login', data={'email': '87654321@student.uwa.edu.au', 'password': 'Test123!'}, follow_redirects=True)
         #self.assertIn(b'You have been logged in', response.data)
         self.assertEqual(response.status_code, 200)
 

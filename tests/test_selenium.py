@@ -18,8 +18,8 @@ class TestLogin(unittest.TestCase):
         password_field = self.driver.find_element(By.NAME, 'password')
         submit_button = self.driver.find_element(By.CLASS_NAME, 'btn-primary')
 
-        email_field.send_keys('0000@student.uwa.edu.au')
-        password_field.send_keys('testpassword')
+        email_field.send_keys('87654321@student.uwa.edu.au')
+        password_field.send_keys('Test123!')
         submit_button = self.driver.find_element(By.CLASS_NAME, 'btn-primary')
 
 
