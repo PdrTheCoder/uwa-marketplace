@@ -48,7 +48,7 @@
                 
                 <div class="form-group mb-3">
                     {{ form.password.label(class="form-label",style="font-weight: bold") }}
-                    {{ form.password(class="form-control", id="password", placeholder="8+ chars-mixed case, digits and special chars.") }}
+                    {{ form.password(class="form-control", id="password", placeholder="8+ chars-mixed case, digits and special chars !@#$%^&*(),.?\":{}|<>") }}
                     <button type="button" class="toggle-password" id="password-toggle" onclick="togglePasswordVisibility('password')">Show</button>
                     {% if form.password.errors %}
                         <div class="alert alert-danger">
