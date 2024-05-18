@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify
-from flask_login import login_required, current_user
 from uwamkp.models import Listing, db
 from sqlalchemy import select
+from flask_login import current_user
 
 showcase_bp = Blueprint('showcase', __name__, url_prefix='/showcase')
 
@@ -12,8 +12,6 @@ def showcase():
     per_page = 12
     search_query = request.args.get('query', '', type=str)
     sort_by = request.args.get('sort', 'newest', type=str)
-
-    print(f"Received request with query: {search_query}, sort: {sort_by}, page: {page}")
 
     try:
         stmt = select(Listing).where(Listing.deleted == False).where(Listing.sold == False)
@@ -49,18 +47,12 @@ def showcase():
     total_pages = (total + per_page - 1) // per_page
 
     try:
-        return render_template('Showcase.html', listings=listings_dict, page=page, total_pages=total_pages, query=search_query, sort=sort_by)
+        return render_template('showcase.html', listings=listings_dict, page=page, total_pages=total_pages, query=search_query, sort=sort_by)
     except Exception as e:
         print(f"Error rendering template: {e}")
         return "An error occurred while rendering the template", 500
 
 
-@showcase_bp.route('/delete_listing/<int:listing_id>', methods=['POST'])
-@login_required
-def delete_listing(listing_id):
-    listing = Listing.query.get(listing_id)
-    if listing and listing.seller_id == current_user.id:
-        db.session.delete(listing)
-        db.session.commit()
-        return jsonify({'success': True})
-    return jsonify({'success': False}), 404
+@showcase_bp.route('/is_logged_in')
+def is_logged_in():
+    return jsonify(logged_in=current_user.is_authenticated)
