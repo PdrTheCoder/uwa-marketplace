@@ -30,7 +30,7 @@ class RegistrationForm(FlaskForm):
         Regexp('(?=.*[a-z])', 0, 'Password must contain at least one lowercase letter.'),
         Regexp('(?=.*[A-Z])', 0, 'Password must contain at least one uppercase letter.'),
         Regexp('(?=.*[0-9])', 0, 'Password must contain at least one digit.'),
-        Regexp('(?=.*[!@#$%^&*(),.?":{}|<>])', 0, 'Password must contain at least one special character.')])
+        Regexp('(?=.*[!@#$%^&*(),.?":{}|<>])', 0, 'Password must contain at least one special character from the set: !@#$%^&*(),.?":{}|<>.')])
     password2 = PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
