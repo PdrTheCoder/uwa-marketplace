@@ -4,6 +4,7 @@ from sqlalchemy import select
 
 showcase_bp = Blueprint('showcase', __name__, url_prefix='/showcase')
 
+
 @showcase_bp.route('/')
 def showcase():
     page = request.args.get('page', 1, type=int)

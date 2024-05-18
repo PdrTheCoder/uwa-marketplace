@@ -30,6 +30,8 @@ migrate = Migrate(app, db)
 # init login manager instance
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = "auth.login"
+login_manager.login_message_category = "info"
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(mylisting_bp)
@@ -48,9 +50,4 @@ def load_user(user_id):
 
 @app.route("/")
 def slash():
-    if current_user.is_authenticated:
-        return redirect(url_for("showcase.showcase"))
-    else:
-        return redirect(url_for("auth.login"))
-
-
+    return redirect(url_for("showcase.showcase"))
