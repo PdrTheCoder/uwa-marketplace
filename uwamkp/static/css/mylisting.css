@@ -15,3 +15,17 @@
   padding: 1.9em 1.9em 1.9em 1.9em!important;
   background-color: #50c4ed;
 }
+
+.my-listing-top-img {
+  width:auto!important;
+  height: 150px;
+  object-fit: contain;
+}
+
+.card-title {
+  min-height: 48px;
+}
+
+.card-title > a {
+  text-decoration: solid;
+}
