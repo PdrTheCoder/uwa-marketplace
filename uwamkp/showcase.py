@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
+from flask_login import login_required, current_user
 from uwamkp.models import Listing, db
 from sqlalchemy import select
 
@@ -15,7 +16,7 @@ def showcase():
     print(f"Received request with query: {search_query}, sort: {sort_by}, page: {page}")
 
     try:
-        stmt = select(Listing).where(Listing.deleted == False)
+        stmt = select(Listing).where(Listing.deleted == False).where(Listing.sold == False)
 
         if search_query:
             stmt = stmt.where(Listing.title.ilike(f'%{search_query}%'))
@@ -52,3 +53,14 @@ def showcase():
     except Exception as e:
         print(f"Error rendering template: {e}")
         return "An error occurred while rendering the template", 500
+
+
+@showcase_bp.route('/delete_listing/<int:listing_id>', methods=['POST'])
+@login_required
+def delete_listing(listing_id):
+    listing = Listing.query.get(listing_id)
+    if listing and listing.seller_id == current_user.id:
+        db.session.delete(listing)
+        db.session.commit()
+        return jsonify({'success': True})
+    return jsonify({'success': False}), 404

@@ -1,0 +1,33 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 200px; /* Adjust this value to maintain uniform height */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-title {
+    flex-grow: 1;
+}
+
+.mt-auto {
+    margin-top: auto;
+}
+
+.card-img-top {
+    object-fit: contain; /* Ensure the whole image is visible */
+    width: 100%; /* Ensure the image takes up the full width of the container */
+    height: 200px; /* Set a fixed height for consistency */
+    display: block; /* Ensure the image is displayed as a block element */
+    background-color: #f8f9fa; /* Add a background color to see the image boundaries */
+}
