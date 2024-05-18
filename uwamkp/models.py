@@ -101,6 +101,7 @@ class Reply(Base):
     created_at: Mapped[str] = mapped_column(DATETIME, nullable=False)
     listing_id: Mapped[int] = mapped_column(
         ForeignKey('listing.id'), nullable=False)
+    user = relationship("User") #add user relationship
 
 
 class Category(Base):

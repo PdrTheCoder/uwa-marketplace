@@ -3,6 +3,7 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style-products.css') }}">
 
+
 <div class="container">
     <form id="productForm" method="POST" enctype=multipart/form-data>
         <div class="row">
@@ -52,7 +53,7 @@
                 </div>
                 <div class="form-group action-btns">
                     <button type="button" class="btn btn-secondary cancelbtn" onclick="confirmCancel()">Cancel</button>
-                    <button type="submit" class="btn btn-dark publishbtn">{% block submitBtnName %}Publish{% endblock
+                    <button type="submit" class="btn btn-primary publishbtn">{% block submitBtnName %}Publish{% endblock
                         %}</button>
                     {% block extraBtn %} {% endblock %}
                 </div>

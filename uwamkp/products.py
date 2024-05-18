@@ -81,17 +81,18 @@ def details(listing_id):
     listing = db.session.query(Listing).get(listing_id)
     form = MessageForm()
     if form.validate_on_submit():
-        new_message = Reply(message=form.messageContent.data,
-                            listing_id=listing_id,
-                            from_user_id=current_user.id,
-                            created_at=datetime.now(timezone.utc)
-                            )
+        new_message = Reply(
+            message=form.messageContent.data,
+            listing_id=listing_id,
+            from_user_id=current_user.id,
+            created_at=datetime.now(timezone.utc)
+        )
         db.session.add(new_message)
         db.session.commit()
         flash('Message posted!', 'success')
+        form = MessageForm()
         messages = db.session.query(Reply).filter_by(listing_id=listing_id).order_by(desc(Reply.created_at)).all()
         return render_template('details.html', listing=listing.to_dict(), form=form, messages=messages)
-    
     messages = db.session.query(Reply).filter_by(listing_id=listing_id).order_by(desc(Reply.created_at)).all()
     return render_template('details.html', listing=listing.to_dict(), form=form, messages=messages)
 
