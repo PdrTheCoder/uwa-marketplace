@@ -86,7 +86,7 @@ def details(listing_id):
             message=form.messageContent.data,
             listing_id=listing_id,
             from_user_id=current_user.id,
-            created_at=get_local_time()
+            created_at=datetime.now(timezone.utc)
         )
         db.session.add(new_message)
         db.session.commit()

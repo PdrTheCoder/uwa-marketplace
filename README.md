@@ -20,13 +20,13 @@ This is a group project for CITS5505. The software aims to provide a trading pla
 5. Install python package  
    `pip install -r requirements.txt`  
 
-6. Migrate database  
-   `cd uwamkp`  
-   `flask db upgrade`
-
-7. Set secret key in environment  
+6. Set secret key in environment  
    In windows powershell: `$env:SECRET_KEY='astrongsecretdsfs'`  
    In mac: `export SECRET_KEY=<astrongsecretkey>`
+
+7. Migrate database  
+   `cd uwamkp`  
+   `flask db upgrade`
 
 8. Run development  
    Under uwamkp folder, run  
