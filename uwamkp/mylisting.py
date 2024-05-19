@@ -1,48 +1,58 @@
 from flask import Blueprint
 from flask import render_template
-from flask import flash
+from flask import request
+from flask_login import login_required
+from flask_login import current_user
 from uwamkp.models import db
 from uwamkp.models import Listing
 from sqlalchemy import select
-
-from flask import jsonify
 
 
 bp = Blueprint('mylisting', __name__, url_prefix='/mylisting')
 
 
 @bp.route('/listings', methods=["GET"])
+@login_required
 def my_listing():
-    # TODO get current user id
-    # TODO maybe pagination later, maybe not
-    stmt = select(Listing).where(Listing.seller_id == 1)
+    page = request.args.get('page', 1, type=int)
+    search_query = request.args.get('query', '', type=str)
+    show_sold = request.args.get('show_sold', 'off', type=str)
+    sort_by = request.args.get('sort', 'newest', type=str)
+
+    per_page = 6
+    start = (page - 1) * per_page
+    end = start + per_page
+
+    stmt = select(
+        Listing
+    ).where(
+        Listing.seller_id == current_user.id
+    ).where(
+        Listing.deleted == False
+    )
+
+    if search_query:
+        stmt = stmt.where(Listing.title.ilike(f'%{search_query}%'))
+
+    if sort_by == 'newest':
+        stmt = stmt.order_by(Listing.created_at.desc())
+    elif sort_by == 'oldest':
+        stmt = stmt.order_by(Listing.created_at.asc())
+
+    if show_sold == 'off':
+        stmt = stmt.where(Listing.sold == False)
+
     listings = db.session.scalars(stmt).all()
     listings_dict = [i.to_dict() for i in listings]
-    return render_template("mylisting.html", listings=listings_dict)
 
+    listings_paginated = listings_dict[start:end]
+    total_pages = (len(listings) + per_page - 1) // per_page
 
-@bp.route('/listings/<listing_id>', methods=["DELETE"])
-def delete_listing(listing_id):
-    # TODO first check if the user is admin - need flask-login ready
-    # TODO check if the listing is belong to current user - need flask-login ready
-    stmt = select(Listing).where(Listing.id == listing_id)
-    listing = db.session.scalars(stmt).one_or_none()
-
-    msg = "error"
-    code = -1
-    category = 'danger'
-
-    if listing:
-        try:
-            db.session.delete(listing)
-            db.session.commit()
-            msg = 'Successfully delete the listing.'
-            code = 0
-            category = 'success'
-        except Exception as e:
-            # TODO use log later
-            msg = f"Delete listing - id: {listing_id} faild."
-    else:
-        msg = 'Can not find the listing, please try again later.'
-    flash(msg, category)
-    return jsonify({"msg": msg, "code": code})
+    return render_template("mylisting.html",
+                           listings=listings_paginated,
+                           current_user=current_user,
+                           page=page,
+                           total_pages=total_pages,
+                           show_sold=show_sold,
+                           query=search_query,
+                           sort=sort_by)

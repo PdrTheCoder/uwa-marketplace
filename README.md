@@ -26,25 +26,27 @@ Yunhui 	          Yunhui Zhang        23839202
 5. Install python package  
    `pip install -r requirements.txt`  
 
-6. Migrate database  
-   `cd uwamkp`  
-   `flask db upgrade`
-
-7. Set secret key in environment  
+6. Set secret key in environment  
    In windows powershell: `$env:SECRET_KEY='astrongsecretdsfs'`  
    In mac: `export SECRET_KEY=<astrongsecretkey>`
 
+7. Migrate database  
+   `cd uwamkp`  
+   `flask db upgrade`
+
 8. Run development  
    Under uwamkp folder, run  
-   `flask run --debug`   
+   `flask run --debug`  
+
+9. Run Unit tests and Selenium tests
+   `cd uwa-marketplace` 
+   `python -m unittest discover`
 
 
 
 # Add some data for dev
 Can use insert_dev_data.py to insert some sample data.
 
-# Login username and password
-username: user_1   email:12345678@student.uwa.edu.au    password:12345678
 
 # Run Unit tests and Selenium tests
 `cd uwa-marketplace`

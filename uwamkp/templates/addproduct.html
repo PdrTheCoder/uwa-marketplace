@@ -1,66 +1,82 @@
 {% extends "base.html" %}
-{% block title %}Add your product{% endblock %}
 {% block content %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-products.css') }}">
+
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="image-upload">
-                <label for="file-input">
-                    <img src="{{ url_for('static', filename='addpic.png') }}" alt="Add photo" class="img-fluid add-photo-btn" width="480px" height="310px">
-                </label>
-                <input id="file-input" type="file" style="display:none;"/>
-                <div id="preview" class="preview"></div>
+    <form id="productForm" method="POST" enctype=multipart/form-data>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="image-upload">
+                    <label for="myimg-input">
+                        <img {% if not listing %}src="{{ url_for('static', filename='addpic.png') }}"{% else %} src="{{ url_for('static', filename=listing.image_path) }}" {% endif %} alt="Add photo"
+                            class="img-fluid add-photo-btn" width="480px" height="310px" id="img-preview">
+                    </label>
+                    {{form.photo(class="form-control", id="myimg-input")}}
+                    <div id="preview" class="preview"></div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <form>
-                <div class="form-group">
-                    <label for="productTitle">Title:</label>
-                    <input type="text" class="form-control" id="productTitle" placeholder="Add your product title briefly">
-                </div>
-                <div class="form-group">
-                    <label for="productPrice">Price:</label>
-                    $ <input type="number" class="form-control" id="productPrice" placeholder="Add price">
-                </div>
+            <div class="col-md-6">
+                {{ form.hidden_tag() }}
 
                 <div class="form-group">
-                    <label for="productCondition">Condition:</label>
-                    <select class="form-control" id="productCondition" aria-placeholder="Choose your condition">
-                        <option value="New">New</option>
-                        <option value="Used1">Used-like new</option>
-                        <option value="Used2">Used-good</option>
-                        <option value="Used3">Used-fair</option>
-                    </select>
+                    <h1 class="title">Title:</h1>
+                    {{ form.title(class="form-control", placeholder="Add your product title briefly") }}
+                    {% if form.title.errors %}
+                    {% for error in form.title.errors %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
                 </div>
-
                 <div class="form-group">
-                    <label for="productDescription">Description:</label>
-                    <textarea class="form-control" id="productDescription" placeholder="Provide information including color, brand, size, type, any imperfections and so on..." rows="4"></textarea>
+                    <h2 class="basicinfo">Price: </h2> $
+                    {{ form.price(class="form-control", placeholder="Add price") }}
+                    {% if form.price.errors %}
+                    {% for error in form.price.errors %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
                 </div>
-                <!-- todo: addfunction -->
+                <div class="form-group">
+                    <h2 class="basicinfo">Condition:</h2>
+                    {{ form.condition(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    <h2 class="basicinfo">Description:</h2>
+                    {{ form.description(class="form-control", placeholder="Provide information including color, brand, size, type, any imperfections...", rows=4) }}
+                    {% if form.description.errors %}
+                    {% for error in form.description.errors %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
+                </div>
                 <div class="form-group action-btns">
-                    <!-- todo: clean content function add  -->
-                    <button type="button" class="btn btn-secondary">Cancel</button>
-                    <!-- todo: store to database -->
-                    <!-- todo: jump into product details page -->
-                    <button type="button" class="btn btn-primary">Publish</button>
+                    <button type="button" class="btn btn-secondary cancelbtn" onclick="goBack()">Cancel</button>
+                    <button type="submit" class="btn btn-primary publishbtn">{% block submitBtnName %}Publish{% endblock
+                        %}</button>
+                    {% block extraBtn %} {% endblock %}
                 </div>
-
-            </form>
-        </div>
-
-        <div class="col-md-12">
-            <div class="seller-info">
-                <img src="..." alt="Seller" class="seller-img">
-                <!-- read seller userid -->
-                <p>Seller: {{ user }}</p>
             </div>
+
         </div>
-    </div>
+    </form>
+    {% block modal %}
+    {% endblock %}
 </div>
 
+<!-- cancel button script -->
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    $("#myimg-input").on("change", function(e){
+        const file = e.target.files;
+        if (e.target.files !== 0) {
+            $("#img-preview").attr("src", URL.createObjectURL(e.target.files[0]))
+        };
+    })
+</script>
 
 {% endblock %}

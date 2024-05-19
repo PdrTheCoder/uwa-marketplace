@@ -1,27 +1,40 @@
-$(function() {
-    $(".c-delete-listing").on("click", function(){
-        // get the listing id first
-        let listingID = $(this).attr("id").split("-")[1];
+// search event
+function get_url() {
+  let query = $("#listing-search-input").val();
+  let sort = $("#listing-sort-select").val();
+  let show_sold = $("#toggleSold").is(":checked")? 'on':'off';
+  return `/mylisting/listings?query=${query}&sort=${sort}&show_sold=${show_sold}`
+}
 
-        // send fetch request
-        fetch(`/mylisting/listings/${listingID}`, {
-            method: "DELETE",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-        }).then((res) => {
-            let resJson = res.json();
-            if (resJson.code === 0) {
-                console.log(resJson.msg)
-            } else {
-                console.log(resJson.msg);
-            }
-            window.location.replace("/mylisting/listings")
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-    })
+function goQuery(){
+  // get the query url and query
+  let url = get_url();
+  window.location.href = url;
+}
+
+$(function () {
+  // bind modal show and pass key data to modal
+  $(".mark-sold").on("click", function (e) {
+    e.preventDefault();
+    let markUrl = $(this).attr("markUrl");
+    $("#confirmSold").data("markUrl", markUrl).modal("show");
+  });
+
+  // click on the btn-yes-sold
+  $("#btn-yes-sold").click(function () {
+    let markUrl = $("#confirmSold").data("markUrl");
+    let redirectUrl = $('#redirectUrl').val();
+    patchListing(markUrl, { sold: true })
+      .then((res) => {
+        if (res.code === 0) {
+          console.log(res.msg);
+        } else {
+          console.log(res.msg);
+        }
+        window.location.replace(redirectUrl);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 });

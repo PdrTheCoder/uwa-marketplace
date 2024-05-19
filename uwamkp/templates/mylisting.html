@@ -2,74 +2,150 @@
 
 {% block extra_head %}
 <link href={{ url_for('static', filename='/css/mylisting.css' ) }} rel="stylesheet">
-<script src={{ url_for('static', filename='/js/mylisting.js') }}></script>
+<script src={{ url_for('static', filename='/js/utils.js' ) }}></script>
+<script src={{ url_for('static', filename='/js/mylisting.js' ) }}></script>
 {% endblock %}
 
 {% block content %}
-<div class="subpage row">
-    <section class="profile col-3">
-        <section id="basic">
-            <div class="centered">
-                <div class="circle">
-                    <p class="circle-inner">AY</p>
+<div class="container">
+    <div class="row">
+        <div class="profile col-3">
+            <section id="basic">
+                <div class="rounded username-card centered mb-3">
+                    <h3 class="h2 text-white mb-0">{{ current_user.username }}</h3>
+                </div>
+
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <span class="h6">Username:</span>
+                        <br />
+                        <span>{{ current_user.username }}</span>
+                    </li>
+
+                    <li class="mb-2">
+                        <span class="h6">Email:</span>
+                        <br />
+                        <span>{{ current_user.email }}</span>
+                    </li>
+                    <li>
+                        <a type="button" class="btn btn-primary" href={{ url_for('product.addproduct') }}>Sell
+                            Something</a>
+                    </li>
+                </ul>
+
+
+            </section>
+        </div>
+        <div class="listing-list col-9">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" id="listing-search-input" class="form-control"
+                            placeholder="Search for items..." value="{{ query }}">
+                        <button onclick="goQuery()" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <input type="checkbox" {% if show_sold=='on' %}checked{% endif %} class="btn-check" id="toggleSold"
+                        autocomplete="off" onclick="goQuery()">
+                    <label class="btn btn-outline-primary" for="toggleSold">Include Sold</label>
+                </div>
+
+                <div class="col-md-3">
+                    <select id="listing-sort-select" class="form-control" onchange="goQuery()">
+                        <option value="newest" {% if sort=='newest' %}selected{% endif %}>Newest</option>
+                        <option value="oldest" {% if sort=='oldest' %}selected{% endif %}>Oldest</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="centered">
-                <h4>Pedro Wang</h4>
-                <h5>Python Programmer</h5>
-            </div>
-        </section>
-    </section>
-    <div class="listing-list col-9 row">
-        {% for listing in listings %}
-        <div class="col-sm-6 mb-3 mb-sm-0">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{ listing.title }}</h5>
-                    <div class="card-text list-desc">{{ listing.description }}</div>
-                    <span>{{ listing.price }} AUD</span>
-                    {% if listing.condition == "New" %}
-                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
-                    {% endif %}
-                    {% if listing.condition == "Used - Like New" %}
-                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
-                    {% endif %}
-                    {% if listing.condition == "Used - Good" %}
-                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
-                    {% endif %}
-                    {% if listing.condition == "Used - Fair" %}
-                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
-                    {% endif %}
+            <div class="row mb-2">
+                {% for listing in listings %}
+                <div class="col-sm-6 col-md-4 mb-2">
+                    <div class="card">
+                        <img src="{{ url_for('static', filename=listing.image_path) }}"
+                            class="card-img-top my-listing-top-img mt-2" alt="Product Image">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ url_for('product.details', listing_id=listing.id) }}">{% if listing.sold
+                                    %}[SOLD]-{% endif %} {{ listing.title }}</a>
+                            </h5>
+                            <p>
+                                <span class="h6">Price: </span>
+                                <br>
+                                <span>{{ listing.price }} AUD</span>
+                            </p>
+                            <p>
+                                <span class="h6">Condition: </span>
+                                <br>
+                                <span>
+                                    {% if listing.condition == "New" %}
+                                    <span class="badge text-bg-success">{{ listing.condition }}</span>
+                                    {% endif %}
+                                    {% if listing.condition == "Used - Like New" %}
+                                    <span class="badge text-bg-info">{{ listing.condition }}</span>
+                                    {% endif %}
+                                    {% if listing.condition == "Used - Good" %}
+                                    <span class="badge text-bg-primary">{{ listing.condition }}</span>
+                                    {% endif %}
+                                    {% if listing.condition == "Used - Fair" %}
+                                    <span class="badge text-bg-secondary">{{ listing.condition }}</span>
+                                    {% endif %}
+                                </span>
+                            </p>
+                            {% if not listing.sold %}
+                            <button type="button" class="btn btn-sm btn-warn float-end mark-sold"
+                                markURL={{url_for("api.update_listing", listing_id=listing.id)}}
+                                style="margin-left: 6px">Mark As Sold</button>
+                            {% endif %}
+                            <a type="button" class="btn btn-sm" href={{ url_for("product.edit", listing_id=listing.id )
+                                }}>Edit</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <a type="button" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <button type="button" class="btn btn-sm btn-outline-danger c-delete-listing" id="delete-{{listing.id}}">Delete</button>
+                {% endfor %}
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                                <a class="page-link" href="{{ url_for('mylisting.my_listing', page=page-1, query=query, sort=sort, show_sold=show_sold) }}">Previous</a>
+                            </li>
+                            {% for p in range(1, total_pages + 1) %}
+                            <li class="page-item {% if p == page %}active{% endif %}">
+                                <a class="page-link" href="{{ url_for('mylisting.my_listing', page=p, query=query, sort=sort, show_sold=show_sold) }}">{{p}}</a>
+                            </li>
+                            {% endfor %}
+                            <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+                                <a class="page-link" href="{{ url_for('mylisting.my_listing', page=page+1, query=query, sort=sort, show_sold=show_sold) }}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
-        {% endfor %}
     </div>
 </div>
 
-<!-- Modal Part Maybe to do it later -->
-
-<!-- <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmSold" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Delete Listing</h1>
+                <h1 class="modal-title fs-5">Confirm Sold?</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete the listing?
+                Are you sure you want mark it as SOLD?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input id="toDeleteListingId" value="" hidden />
-                <button type="button" class="btn btn-danger">I'm Sure, Please.</button>
+                <input id="redirectUrl" value={{url_for('mylisting.my_listing')}} hidden />
+                <button type="button" class="btn btn-danger" id="btn-yes-sold">I'm Sure, Please.</button>
             </div>
         </div>
     </div>
-</div> -->
+</div>
 {% endblock %}

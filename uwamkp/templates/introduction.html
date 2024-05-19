@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}introduction{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/intro.css') }}">
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#intro">Introduction</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how2use">How to use</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#register">Register and Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#manage">Manage your listings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#message">Leave messages</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h2 id="intro">Introduction</h2>
+            </div>
+            <p class="content">Hello, welcome to UWA Marketplace!
+            <br>This platform is designed for UWA students to buy and sell second-hand goods. Create an account, list your items, and connect with sellers through our message board to facilitate transactions. 
+            <br><b>Join us and start trading today!</b></p>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h2 id="how2use">How to use this platform?</h2>
+            </div>
+            <p>Using this webpage to find information about UWA listings for sale is simple. Just follow these 7 steps:</p>
+            <h4 class="subtitle">1. Create an Account:</h4>
+            <p>You can start by creating your UWA Marketplace account in <a href="/auth/login">register</a> page. You only need one account to sell and buy in our platform, so after registering, you can list your goods and leave message to seller.</p>
+            <h4 class="subtitle">2. Explore all listings:</h4>
+            <p>You can visit the showcase to explore all the goods listed on <a href="/showcase">explore</a> page. Also, you can search certain items that you're interested in by keywords.</p>
+            <h4 class="subtitle">3. List Your Items:</h4>
+            <p>You can create your listings <a href="/addproduct">here</a>, providing detailed information such as title, price, condition, and a description.</p>
+            <h4 class="subtitle">4. Publish Your Listings:</h4>
+            <p>Once published, your products will appear on the <a href="/showcase">explore</a> page for everyone to see.</p>
+            <h4 class="subtitle">5. Product Visibility:</h4>
+            <p>Users can also search for items using keywords and view detailed pages for each product.</p>
+            <h4 class="subtitle">6. Message to seller:</h4>
+            <p>Other users can leave messages on your product details page. And you can connect with them via the email which showed on message board after they posted. By clicking their mail address, you can directly jump into your mail system. 
+                <br>Therefore, if you want to buy something, you should leave message on message board so that seller can get in touch with you.</p>
+            <h4 class="subtitle">7. Manage Listings:</h4>
+            <p>Of course you can update your product information on the <a href="/mylisting/listings">MyListings</a> page. And if your listings are sold, you can mark it as sold out.</p>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h2 id="register">Register and Login</h2>
+            </div>
+            <p>This is the first thing you need to do.<br>We suggest to use UWA Student mail because our platform is only open for UWA student. That means, you must register email must be 8 digits followed by <b>@student.uwa.edu.au</b>. 
+                <br>And you need to set your password, it must be more than 8 characters with <b>mixed case, digits, and special chars <u>!@#$%^&*(),.?":{}|<></u></b>
+                <br>Meanwhile, you should provide a username which must <b>start with a letter and include only letters, numbers, dots or underscores.</b>
+            </p>
+            <!-- Add more sections as needed -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h2 id="manage">Manage your listings</h2>
+            </div>
+            <p>In <a href="/mylisting/listings">MyListings</a> page, you can easily manage your listings and interact with potential buyers. Use the <b>"Sell Something"</b> button to add new products to your inventory. The search bar allows you to find specific items you're selling. Below, you can see all the products you're currently selling. Each listing includes options to <b>"Edit"</b> for updating product information or <b>"Mark As Sold"</b> when an item has been sold. This dashboard makes it simple to keep track of and manage your listings.</p>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h2 id="message">Leave messages to sellers</h2>
+            </div>
+            <p>You can leave a message for the seller about the product you're interested in purchasing. The seller will see your email address and can contact you directly through email. You may also continue the conversation here on the message board.</p>
+        </main>
+    </div>
+</div>
+
+{% endblock %}

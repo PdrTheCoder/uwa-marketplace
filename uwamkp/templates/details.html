@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Product details{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style-products.css') }}">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- image -->
+            <img src="{{ url_for('static', filename=listing.image_path) }}" alt="Product Image" class="img-fluid" width="480px" height="310px">
+        </div>
+        <div class="col-md-6">
+            <!-- listing details -->
+            <h2>{{ listing.title }}</h2>
+            <h2 class="basicinfo">Price:</h2>
+            <p>${{ listing.price }}</p>
+            <h2 class="basicinfo">Condition:</h2>
+            <p>{{ listing.condition }}</p>
+            <h2 class="basicinfo">Description:</h2>
+            <p class="description-box">{{ listing.description }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Seller information -->
+            <h4>Seller Information</h4>
+            <p><strong>Sold By:</strong> {{ listing.seller_username }}</p>
+            <p><strong>Created at:</strong> {{ listing.created_at }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <!-- message board to seller -->
+            <form id="messageForm" method="POST" class="messagebox">
+                {{ form.hidden_tag() }}
+                {{ form.messageContent(class="form-control mt-2", placeholder="Enter your message here...") }}
+                {% if form.messageContent.errors %}
+                    {% for error in form.messageContent.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                {% endif %} 
+                <button type="button" class="btn btn-secondary cancelbtn" onclick="goBack()">Cancel</button>
+                <button type="submit" class="btn btn-primary postbtn">Post Message</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <!-- message board -->
+        <div class="col-md-12">
+            <h4>Message Board</h4>
+            <hr width="900px">
+            {% for message in messages %}
+            <div class="message">
+                <div class="message-header">
+                    <span class="username">{{ message.from_username }}</span> 
+                    <span class="timestamp"> / {{ message.created_at }}</span>
+                    <span class="usermail">/ <a href="mailto:{{ message.from_user_email }}">{{ message.from_user_email }}</a></span>
+                </div>
+                <p class="message-content">{{ message.message }}</p>
+                <hr width="900px">
+            </div>
+            {% else %}
+            <p> - No messages yet :)</p>
+            <hr width="900px">
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+</div>
+
+<script>
+        function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock %}

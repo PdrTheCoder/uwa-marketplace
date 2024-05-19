@@ -8,7 +8,7 @@
     <ul class=flashes>
         {% for category, message in messages %}
         <div class="alert alert-{{ category }} " role="alert">
-        {{ message }}
+            {{ message }}
         </div>
         {% endfor %}
     </ul>
@@ -22,27 +22,38 @@
 </head>
 
 <body>
+    <div class="first-wrapper">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <!-- Container wrapper -->
         <div class="container-fluid">
             <!-- Navbar brand -->
-            <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                <h5 class="pt-1">UWA MKP</h5>
+            <a class="navbar-brand mt-2 mt-lg-0" href="/showcase">
+                <h5 class="pt-1">UWA Marketplace</h5>
             </a>
-
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Reserve1</a>
+                        <a class="nav-link" href="/showcase">Explore</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Reserve2</a>
+                        <a class="nav-link" href="/mylisting/listings">My Listing</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Reserve3</a>
+                        <a class="nav-link" href="/introduction">Introduction</a>
                     </li>
                 </ul>
+            </div>
+
+            <div class="d-flex user-profile">
+                {% if current_user.is_authenticated %}
+                    <span>Hi {{ current_user.username }}!</span>
+                    <a class="nav-link" href="/auth/logout" >Logout</a>
+                {% else %}
+                    <a class="nav-link" href="/auth/login" >Sign In</a>
+                {% endif %}
             </div>
             <!-- Collapsible wrapper -->
         </div>
@@ -50,8 +61,8 @@
     </nav>
     <!-- Navbar -->
 
-    <div id="content">
-        <div class="row center-part">
+    <div id="content container-fluid">
+        <div class="center-part row mt-3" style="margin-right: auto; margin-left: auto;">
             <div class="col-2"></div>
             <div class="col-8">
                 {% block content %}{% endblock %}
@@ -59,9 +70,10 @@
             <div class="col-2"></div>
         </div>
     </div>
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-primary text-center text-white fixed-bottom">
+    <footer class="bg-primary text-center text-white">
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
             CITS5505 Group Project - UWA Marketplace
         </div>
