@@ -41,7 +41,7 @@
                         <div class="text-danger">{{ error }}</div>
                     {% endfor %}
                 {% endif %} 
-                <button type="button" class="btn btn-secondary cancelbtn" onclick="confirmCancel()">Cancel</button>
+                <button type="button" class="btn btn-secondary cancelbtn" onclick="goBack()">Cancel</button>
                 <button type="submit" class="btn btn-primary postbtn">Post Message</button>
             </form>
         </div>
@@ -70,16 +70,9 @@
     </div>
 </div>
 
-<!-- cancel button script -->
 <script>
-    function confirmCancel(){
-        var confirmation = confirm('Are you sure you want to quit?');
-        if (confirmation) {
-            window.location.href="/";
-        }
-        // Stay in the original webpage
+        function goBack() {
+        window.history.back();
     }
-
 </script>
-
 {% endblock %}

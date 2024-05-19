@@ -1,5 +1,6 @@
 from datetime import datetime
 from datetime import timezone
+from time import localtime,strftime
 from flask import Blueprint
 from flask import redirect
 from flask import url_for
@@ -60,7 +61,7 @@ def addproduct():
                 suspended=False,
                 sold=False,
                 deleted=False,
-                created_at=datetime.now(timezone.utc),
+                created_at=get_local_time,
                 image_path=relative_path
             )
             db.session.add(new_listing)
@@ -114,7 +115,7 @@ def edit(listing_id: int):
         listing.price = form.price.data
         listing.condition = form.condition.data
         listing.description = form.description.data
-        listing.updated_at = datetime.now(timezone.utc)
+        listing.updated_at = get_local_time()
         listing.image_path = relative_path
         try:
             db.session.commit()
@@ -125,3 +126,6 @@ def edit(listing_id: int):
             flash("Error updating listing", "danger")
             return render_template('updateproduct.html', form=form, listing=listing)
     return render_template('updateproduct.html', form=form, listing=listing)
+
+def get_local_time():
+    return datetime.strptime(strftime("%Y-%m-%d %H:%M:%S", localtime()), "%Y-%m-%d %H:%M:%S")

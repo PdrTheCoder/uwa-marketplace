@@ -52,7 +52,7 @@
                     {% endif %}
                 </div>
                 <div class="form-group action-btns">
-                    <button type="button" class="btn btn-secondary cancelbtn" onclick="confirmCancel()">Cancel</button>
+                    <button type="button" class="btn btn-secondary cancelbtn" onclick="goBack()">Cancel</button>
                     <button type="submit" class="btn btn-primary publishbtn">{% block submitBtnName %}Publish{% endblock
                         %}</button>
                     {% block extraBtn %} {% endblock %}
@@ -67,12 +67,8 @@
 
 <!-- cancel button script -->
 <script>
-    function confirmCancel() {
-        var confirmation = confirm('Are you sure you want to quit your editing?');
-        if (confirmation) {
-            window.location.href = "/";
-        }
-        // Stay in the original webpage
+    function goBack() {
+        window.history.back();
     }
 
     $("#myimg-input").on("change", function(e){
