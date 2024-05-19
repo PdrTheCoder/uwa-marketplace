@@ -1,11 +1,22 @@
 from datetime import datetime
-from flask import Blueprint, flash, render_template, request, redirect, url_for, jsonify
-from flask_login import login_required, login_user, logout_user, current_user
-from uwamkp.models import db, User
-from uwamkp.forms import LoginForm, RegistrationForm
+from flask import Blueprint
+from flask import flash
+from flask import render_template
+from flask import request
+from flask import redirect
+from flask import url_for
+from flask_login import login_required
+from flask_login import login_user
+from flask_login import logout_user
+from uwamkp.models import db
+from uwamkp.models import User
+from uwamkp.forms import LoginForm
+from uwamkp.forms import RegistrationForm
+
 from sqlalchemy import select
 from werkzeug.security import generate_password_hash
 import re  # Regular expression module for validating email and username
+
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -18,7 +29,7 @@ def register():
         user = User(email=form.email.data.lower(),
                     username=form.username.data,
                     password=hashed_password,
-                    created_at=datetime.utcnow(),  # timezone-aware UTC datetime
+                    created_at=datetime.utcnow(),# timezone-aware UTC datetime
                     is_admin=False,
                     deleted=False)
         db.session.add(user)
@@ -35,20 +46,19 @@ def register():
 @bp.route('/login', methods=["GET", "POST"])
 def login():
     form = LoginForm()
-    next_page = request.args.get('next')  # Get 'next' parameter from URL
-
     if request.method == "GET":
-        return render_template("login.html", form=form, next=next_page)
+        return render_template("login.html", form=form)
     else:
         if form.is_submitted() and form.validate():
             stmt = select(User).where(User.email == form.email.data)
             user = db.session.scalars(stmt).one_or_none()
             if user and user.verify_password(form.password.data):
                 login_user(user)
-                return redirect(next_page or url_for("showcase.showcase"))  # Redirect to 'next' page if available
+                return redirect(url_for("showcase.showcase"))
             else:
-                flash('Wrong email and password combination or email does not exist', 'danger')
-        return render_template("login.html", form=form, next=next_page)
+                flash('Wrong email and password combination \
+                    or email does not exist', 'danger')
+        return render_template("login.html", form=form)
 
 
 @bp.route('/logout')
@@ -57,9 +67,3 @@ def logout():
     logout_user()
     flash('You have been logged out.', 'info')
     return redirect(url_for("auth.login"))
-
-
-@bp.route('/is_logged_in')
-def is_logged_in():
-    return jsonify(logged_in=current_user.is_authenticated)
-
