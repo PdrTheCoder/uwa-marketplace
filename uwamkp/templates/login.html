@@ -12,36 +12,37 @@
         <div class="col-md-6 offset-md-3">
             <div class="login-form">
                 <h2 class="text-center">Welcome to UWA Marketplace!</h2>
-                <form action="/auth/login" method="POST">
+                <form action="{{ url_for('auth.login', next=next) }}" method="POST"> <!-- Pass 'next' parameter -->
                     {{ form.csrf_token }}
+                    <input type="hidden" name="next" value="{{ next }}"> <!-- Hidden field to retain the 'next' parameter -->
                     <div class="form-group">
-                    <p>{{ form.email.label(style="font-weight: bold") }} {{ form.email(class="form-control") }}</p>
-                    {% if form.email.errors %}
-                    <ul class="errors">
-                        {% for error in form.email.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label style="font-weight: bold">{{ form.password.label }}</label>
-                    {{ form.password(class="form-control", id="password") }}
-                    <i class="fas fa-eye-slash toggle-password" id="togglePasswordIcon" onclick="togglePasswordVisibility()"></i>
-                    {% if form.password.errors %}
-                    <ul class="errors">
-                        {% for error in form.password.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </div>
-                <div class="btn-container">
-                <button type="submit" class="btn btn-primary">Login</button>
-                </div>
+                        <p>{{ form.email.label(style="font-weight: bold") }} {{ form.email(class="form-control") }}</p>
+                        {% if form.email.errors %}
+                        <ul class="errors">
+                            {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight: bold">{{ form.password.label }}</label>
+                        {{ form.password(class="form-control", id="password") }}
+                        <i class="fas fa-eye-slash toggle-password" id="togglePasswordIcon" onclick="togglePasswordVisibility()"></i>
+                        {% if form.password.errors %}
+                        <ul class="errors">
+                            {% for error in form.password.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <div class="btn-container">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
                 </form>
                 <div class="btn-container">
-                <a href="{{ url_for('auth.register') }}" class="btn-custom">Still new? Register here!</a>
+                    <a href="{{ url_for('auth.register') }}" class="btn-custom">Still new? Register here!</a>
                 </div>
             </div>
         </div>
