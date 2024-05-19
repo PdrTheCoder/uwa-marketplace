@@ -1,9 +1,8 @@
+from datetime import timezone
 from sqlalchemy.dialects.sqlite import (
-    BLOB,
     BOOLEAN,
     DATETIME,
     DECIMAL,
-    INTEGER,
     SMALLINT,
     TEXT,
     VARCHAR,
@@ -18,9 +17,9 @@ from sqlalchemy.orm import relationship
 from werkzeug.security import check_password_hash
 
 
-def format_iso_datetime(some_datetime):
-    """Format the datetime to isoformat"""
-    return some_datetime.isoformat(sep=" ", timespec="seconds")
+def format_local_time(some_datetime):
+    """Format the datetime to local time str"""
+    return some_datetime.replace(tzinfo=timezone.utc).astimezone().strftime("%m/%d/%Y, %H:%M:%S")
 
 
 class Base(DeclarativeBase):
@@ -48,11 +47,6 @@ class Listing(Base):
     __tablename__ = 'listing'
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     title: Mapped[str] = mapped_column(VARCHAR(60), nullable=False)
-    # For condition
-    # 0: New
-    # 1: Used - Like New
-    # 2: Used - Good
-    # 3: Used - Fair
     condition: Mapped[int] = mapped_column(SMALLINT, nullable=False)
     price: Mapped[float] = mapped_column(DECIMAL, nullable=False)
     description: Mapped[str] = mapped_column(TEXT, nullable=False)
@@ -86,8 +80,9 @@ class Listing(Base):
             "suspended": self.suspended,
             "sold": self.sold,
             "deleted": self.deleted,
-            "created_at": format_iso_datetime(self.created_at),
-            "updated_at": format_iso_datetime(self.updated_at) if self.updated_at else None,
+            # TODO better render utc time and let client side determine timezone
+            "created_at": format_local_time(self.created_at),
+            "updated_at": format_local_time(self.updated_at) if self.updated_at else None,
             "image_path": self.image_path
         }
 
@@ -102,6 +97,18 @@ class Reply(Base):
     listing_id: Mapped[int] = mapped_column(
         ForeignKey('listing.id'), nullable=False)
     user = relationship("User") #add user relationship
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "message": self.message,
+            "from_user_id": self.from_user_id,
+            # TODO better render utc time and let client side determine timezone
+            "created_at": format_local_time(self.created_at),
+            "listing_id": self.listing_id,
+            "from_username": self.user.username,
+            "from_user_email": self.user.email
+        }
 
 
 class Category(Base):

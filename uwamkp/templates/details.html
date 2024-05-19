@@ -26,8 +26,8 @@
         <div class="col-md-4">
             <!-- Seller information -->
             <h4>Seller Information</h4>
-            <p><strong>Seller name:</strong> {{ listing.seller_username }}</p>
-            <!-- <img src="{{ url_for('static', filename='#sellerimage') }}" alt="Seller Photo" class="seller-img"> -->
+            <p><strong>Sold By:</strong> {{ listing.seller_username }}</p>
+            <p><strong>Created at:</strong> {{ listing.created_at }}</p>
         </div>
     </div>
     <div class="row">
@@ -54,9 +54,9 @@
             {% for message in messages %}
             <div class="message">
                 <div class="message-header">
-                    <span class="username">{{ message.user.username }}</span> 
-                    <span class="timestamp"> / {{ message.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
-                    <span class="usermail">/ <a href="mailto:{{ message.user.email }}">{{ message.user.email }}</a></span>
+                    <span class="username">{{ message.from_username }}</span> 
+                    <span class="timestamp"> / {{ message.created_at }}</span>
+                    <span class="usermail">/ <a href="mailto:{{ message.from_user_email }}">{{ message.from_user_email }}</a></span>
                 </div>
                 <p class="message-content">{{ message.message }}</p>
                 <hr width="900px">
