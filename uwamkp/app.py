@@ -2,7 +2,6 @@ from flask import Flask
 from flask import redirect
 from flask import url_for
 from flask_login import LoginManager
-from flask_login import current_user
 from flask_migrate import Migrate
 import os
 from sqlalchemy import select
@@ -34,11 +33,15 @@ login_manager.login_view = "auth.login"
 login_manager.login_message_category = "info"
 
 app.register_blueprint(auth_bp)
+app.register_blueprint(api_bp)
+app.register_blueprint(introduction_bp)
+
+# At the begining we split blueprints to avoide possible conflicts.
+# TODO suppose to merge below three blueprint into one blueprint.
+# need more time to do this carefully, do not end up with a mess.
 app.register_blueprint(mylisting_bp)
 app.register_blueprint(showcase_bp)
 app.register_blueprint(products_bp)
-app.register_blueprint(introduction_bp)
-app.register_blueprint(api_bp)
 
 
 @login_manager.user_loader
