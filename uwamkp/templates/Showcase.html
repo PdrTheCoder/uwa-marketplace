@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block extra_head %}
+<link href="{{ url_for('static', filename='css/showcase.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
     <div class="row mb-3">
@@ -22,13 +26,35 @@
     <div class="row" id="products-container">
         {% for listing in listings %}
         <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename=listing.image_path) }}"
+                     class="card-img-top my-listing-top-img" alt="Product Image">
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title">
                         <a href="{{ url_for('product.details', listing_id=listing.id) }}">{{ listing.title }}</a>
                     </h5>
                     <p class="card-text">Price: {{ listing.price }} AUD</p>
-                    <p class="card-text">Seller Username: {{ listing.seller_username }}</p>
+                    <p>
+                        <span class="h6">Condition: </span>
+                        <br>
+                        <span>
+                            {% if listing.condition == "New" %}
+                            <span class="badge text-bg-success">{{ listing.condition }}</span>
+                            {% endif %}
+                            {% if listing.condition == "Used - Like New" %}
+                            <span class="badge text-bg-info">{{ listing.condition }}</span>
+                            {% endif %}
+                            {% if listing.condition == "Used - Good" %}
+                            <span class="badge text-bg-primary">{{ listing.condition }}</span>
+                            {% endif %}
+                            {% if listing.condition == "Used - Fair" %}
+                            <span class="badge text-bg-secondary">{{ listing.condition }}</span>
+                            {% endif %}
+                        </span>
+                    </p>
+                    <p class="card-text mt-auto">
+                        By: {{ listing.seller_username }}
+                    </p>
                 </div>
             </div>
         </div>
