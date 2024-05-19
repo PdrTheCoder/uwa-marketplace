@@ -1,0 +1,16 @@
+[Unit]
+Description=UWA MarketPlace Flask Service
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Environment="SECRET_KEY=averystrongkey123"
+WorkingDirectory=/home/ubuntu/uwa-marketplace
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/home/ubuntu/uwa-marketplace/venv/bin/gunicorn --bind 127.0.0.1:8877 uwamkp.wsgi:app
+
+[Install]
+WantedBy=multi-user.target
