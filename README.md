@@ -14,11 +14,10 @@ For frontend development, we use html, css, js and bootstrap style framework to 
 
 -  A user can expore all items from other uwa students. We also provide pagination, sorting and searching functionality for better user experience.
 
--  A user can view details of a listed item and communicate with sellers.
+-  A user can view details of a listed item and communicate with sellers by leaving messages to them.  
 
--  The selling happens offline, but after a successful sell, a user can mark his/her items as sold.
+-  A user can also manage his/her listings, including creating new listings, mark listings as sold (In our design, sellers and buyers trade items offline, but after a successful sell, the seller can mark his/her items as sold.), delete listing.  
 
--  A user can also delete his/her listings.  
 
 # Team Information  
 | Name | Student ID | Github Username |
